@@ -13,7 +13,8 @@ class Investment extends StatelessWidget {
         width: 350,
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-            color: Colors.green[100], borderRadius: BorderRadius.circular(16)),
+            color: Color.fromRGBO(0, 189, 86, 0.4),
+            borderRadius: BorderRadius.circular(16)),
         child: Column(children: [
           Text('Soy una inversión'),
           SizedBox(height: 80),

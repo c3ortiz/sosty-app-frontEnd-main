@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
 import 'package:my_first_app/investments.dart';
@@ -19,35 +19,44 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: SafeArea(
+        body: SingleChildScrollView(
             child: Column(
           children: [
-            SizedBox(height: 30),
-            //app bar
-            Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.0),
+            //Balance
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.vertical({Radius top = Radius.zero, Radius bottom = Radius.zero}),
+                color: Color.fromRGBO(77, 208, 137, 1),
+              ),
+              height: 150,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Row(
-                      children: [
-                        Text('Mis',
-                            style: TextStyle(
-                                fontSize: 30, fontWeight: FontWeight.bold)),
-                        Text(' Inversiones', style: TextStyle(fontSize: 30)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                            padding: EdgeInsets.all(6),
-                            decoration: BoxDecoration(
-                                color: Colors.blue, shape: BoxShape.circle),
-                            child: Icon(Icons.add))
-                      ],
-                    )
+                    Text('99.000',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold)),
+                    SizedBox(height: 10),
+                    Text('Balance'),
                   ],
-                )),
+                ),
+              ),
+            ),
+
+            SizedBox(height: 30),
+
+            //Mis inversiones statement
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25),
+                child: Row(children: [
+                  Text('Mis',
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                  Text(' Inversiones', style: TextStyle(fontSize: 30)),
+                ])),
 
             SizedBox(height: 30),
 
@@ -72,6 +81,9 @@ class _MainScreenState extends State<MainScreen> {
                 count: 4,
                 effect:
                     ExpandingDotsEffect(activeDotColor: Colors.grey.shade800)),
+
+            //Balance
+            SizedBox(height: 30),
           ],
         )));
   }
