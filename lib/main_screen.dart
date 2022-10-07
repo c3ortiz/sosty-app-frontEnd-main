@@ -25,7 +25,6 @@ class _MainScreenState extends State<MainScreen> {
             //Balance
             Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.vertical({Radius top = Radius.zero, Radius bottom = Radius.zero}),
                 color: Color.fromRGBO(77, 208, 137, 1),
               ),
               height: 150,

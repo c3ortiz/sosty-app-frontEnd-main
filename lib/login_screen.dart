@@ -2,9 +2,41 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_first_app/main_screen.dart';
+import 'package:http/http.dart';
+import 'dart:convert';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  void logIn(String email, String password) async {
+    try {
+      Response response = await post(
+          Uri.parse('https://sosty-api.azurewebsites.net/api/User/Login'),
+          headers: <String, String>{'Content-Type': 'application/json'},
+          body: jsonEncode(<String, String>{
+            'email': email,
+            'password': password,
+          }));
+
+      print(response.statusCode);
+
+      if (response.statusCode == 200) {
+        print('Sucessful login');
+      } else {
+        print('failed');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +76,10 @@ class LoginScreen extends StatelessWidget {
                         border: Border.all(color: Colors.white),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Padding(
+                      child: Padding(
                         padding: EdgeInsets.only(left: 20.0),
-                        child: TextField(
+                        child: TextFormField(
+                          controller: _emailController,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: 'Email',
@@ -66,10 +99,10 @@ class LoginScreen extends StatelessWidget {
                         border: Border.all(color: Colors.white),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Padding(
+                      child: Padding(
                         padding: EdgeInsets.only(left: 20.0),
-                        child: TextField(
-                          obscureText: true,
+                        child: TextFormField(
+                          controller: _passwordController,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: 'Password',
@@ -95,10 +128,8 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MainScreen()));
+                        logIn(_emailController.text.toString(),
+                            _passwordController.text.toString());
                       },
                     ),
                   ),
