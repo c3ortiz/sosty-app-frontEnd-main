@@ -1,9 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:my_first_app/main_screen.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
+
+import 'package:my_first_app/user.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -30,11 +34,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (response.statusCode == 200) {
         print('Sucessful login');
+        Map<dynamic, dynamic> map = json.decode(response.body);
+        // Map<String, dynamic> data = map["user"];
+        // print(data["userID"]);
+        var user = User.fromJson(map);
+        print(user.accessToken);
       } else {
         print('failed');
       }
     } catch (e) {
-      print(e.toString());
+      throw e;
     }
   }
 
