@@ -20,6 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+//retornar algo
   void logIn(String email, String password) async {
     try {
       Response response = await post(
@@ -30,20 +31,16 @@ class _LoginScreenState extends State<LoginScreen> {
             'password': password,
           }));
 
-      print(response.statusCode);
-
       if (response.statusCode == 200) {
-        print('Sucessful login');
         Map<dynamic, dynamic> map = json.decode(response.body);
-        // Map<String, dynamic> data = map["user"];
-        // print(data["userID"]);
         var user = User.fromJson(map);
-        print(user.accessToken);
-      } else {
-        print('failed');
-      }
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => new MainScreen(user: user)));
+      } else {}
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 

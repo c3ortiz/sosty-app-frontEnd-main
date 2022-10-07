@@ -2,18 +2,23 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_first_app/investments.dart';
+import 'package:my_first_app/user.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  final User user;
+  const MainScreen({super.key, required this.user});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<MainScreen> createState() => _MainScreenState(user);
 }
 
 class _MainScreenState extends State<MainScreen> {
   //Investments controller
   final _controller = PageController();
+  final User user;
+
+  _MainScreenState(this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +38,7 @@ class _MainScreenState extends State<MainScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('99.000',
+                    Text(user.user.balance,
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 30,
