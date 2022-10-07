@@ -23,7 +23,7 @@ class UserInfo {
     return UserInfo(
       userID: json["userID"] as String,
       userType: json["userType"] as String,
-      balance: json["userType"] as String,
+      balance: json["balance"] == null ? "0" : json["key1"],
     );
   }
 }
