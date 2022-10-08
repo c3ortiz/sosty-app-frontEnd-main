@@ -27,38 +27,3 @@ class UserInfo {
     );
   }
 }
-
-// class User {
-//   final UserInfo user;
-//   final String accessToken;
-
-//   User(this.user, this.accessToken);
-
-//   User.fromJson(Map<String, dynamic> json)
-//       : user = json['user'],
-//         accessToken = json['accessToken'];
-
-//   Map<String, dynamic> toJson() => {
-//         'user': user,
-//         'accessToken': accessToken,
-//       };
-// }
-
-// class UserInfo {
-//   String userID;
-//   String userType;
-//   int balance;
-
-//   UserInfo(this.userID, this.userType, this.balance);
-
-//   UserInfo.fromJson(Map<String, dynamic> json)
-//       : userID = json['userID'],
-//         userType = json['userType'],
-//         balance = json['balance'];
-
-//   Map<String, dynamic> toJson() => {
-//         'userID': userID,
-//         'userType': userType,
-//         'balance': balance,
-//       };
-// }

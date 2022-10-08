@@ -2,10 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_first_app/investments.dart';
+import 'package:my_first_app/login_screen.dart';
+import 'package:my_first_app/user.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
+
+  final user = 'sumama';
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -42,6 +46,26 @@ class _MainScreenState extends State<MainScreen> {
                     Text('Balance'),
                   ],
                 ),
+              ),
+            ),
+
+            Center(
+              child: ElevatedButton(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 80.0),
+                  child: Text(
+                    'Volver',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                },
               ),
             ),
 
