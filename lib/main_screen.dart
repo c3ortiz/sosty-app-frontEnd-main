@@ -2,20 +2,23 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_first_app/investments.dart';
-import 'package:my_first_app/login_screen.dart';
 import 'package:my_first_app/user.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  final User user;
+  const MainScreen({super.key, required this.user});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<MainScreen> createState() => _MainScreenState(user);
 }
 
 class _MainScreenState extends State<MainScreen> {
   //Investments controller
   final _controller = PageController();
+  final User user;
+
+  _MainScreenState(this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -27,43 +30,33 @@ class _MainScreenState extends State<MainScreen> {
             //Balance
             Container(
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                ),
                 color: Color.fromRGBO(77, 208, 137, 1),
               ),
               height: 150,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('luks',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold)),
-                    SizedBox(height: 10),
-                    Text('Balance'),
-                  ],
-                ),
-              ),
-            ),
-
-            Center(
-              child: ElevatedButton(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 80.0),
-                  child: Text(
-                    'Volver',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("\$ ${user.user.balance}",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold)),
+                    ],
                   ),
-                ),
-                onPressed: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
-                },
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Text(
+                      "balance",
+                    ),
+                  ]),
+                ],
               ),
             ),
 

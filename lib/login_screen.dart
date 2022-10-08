@@ -18,7 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  Future logIn(String email, String password) async {
+  void logIn(String email, String password) async {
     try {
       Response response = await post(
           Uri.parse('https://sosty-api.azurewebsites.net/api/User/Login'),
@@ -28,15 +28,16 @@ class _LoginScreenState extends State<LoginScreen> {
             'password': password,
           }));
 
-      Map<dynamic, dynamic> map = json.decode(response.body);
-      var user = User.fromJson(map);
-
-      if (response.statusCode.toString() == '200') {
+      if (response.statusCode == 200) {
+        Map<dynamic, dynamic> map = json.decode(response.body);
+        var user = User.fromJson(map);
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => MainScreen()));
-      }
+            context,
+            MaterialPageRoute(
+                builder: (context) => new MainScreen(user: user)));
+      } else {}
     } catch (e) {
-      print(e.toString());
+      rethrow;
     }
   }
 
@@ -104,7 +105,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Padding(
                         padding: EdgeInsets.only(left: 20.0),
                         child: TextFormField(
-                          obscureText: true,
                           controller: _passwordController,
                           decoration: InputDecoration(
                             border: InputBorder.none,
