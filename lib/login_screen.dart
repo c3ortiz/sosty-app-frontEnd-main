@@ -33,11 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (response.statusCode.toString() == '200') {
         Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => MainScreen(
-                      user: user,
-                    )));
+            context, MaterialPageRoute(builder: (context) => MainScreen()));
       }
     } catch (e) {
       print(e.toString());
