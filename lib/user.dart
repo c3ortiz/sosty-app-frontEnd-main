@@ -1,6 +1,6 @@
 class User {
   UserInfo user;
-  String accessToken;
+  String? accessToken;
 
   User({required this.user, required this.accessToken});
 
@@ -12,9 +12,9 @@ class User {
 }
 
 class UserInfo {
-  String userID;
-  String userType;
-  String balance;
+  String? userID;
+  String? userType;
+  String? balance;
 
   UserInfo(
       {required this.userID, required this.userType, required this.balance});
@@ -23,7 +23,7 @@ class UserInfo {
     return UserInfo(
       userID: json["userID"] as String,
       userType: json["userType"] as String,
-      balance: json["balance"] == null ? "0" : json["key1"],
+      balance: json["balance"] ?? "0",
     );
   }
 }
