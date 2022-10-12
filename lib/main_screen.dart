@@ -26,8 +26,8 @@ class _MainScreenState extends State<MainScreen> {
   _MainScreenState(this.user);
 
   Future refresh() async {
-    final url = Uri.parse(
-        'https://sosty-api.azurewebsites.net/api/User/GetUserbyID?userID=${user.user.userID}');
+    final url =
+        Uri.parse('https://pruebadessoc.getsandbox.com/api/User/GetUserbyID');
     final response = await http.get(url,
         headers: <String, String>{'Content-Type': 'application/json'});
 

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, unnecessary_new
 
 import 'package:flutter/material.dart';
 import 'package:my_first_app/main_screen.dart';
@@ -6,6 +6,8 @@ import 'package:http/http.dart';
 import 'dart:convert';
 
 import 'package:my_first_app/user.dart';
+
+import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -148,10 +150,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         '¿Aún no usas Sosty?',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      const Text(
-                        ' Regístrate',
-                        style: TextStyle(
-                            color: Colors.blue, fontWeight: FontWeight.bold),
+                      new GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RegisterScreen()));
+                        },
+                        child: new Text(
+                          ' Regístrate',
+                          style: TextStyle(
+                              color: Colors.blue, fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ],
                   )
