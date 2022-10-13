@@ -18,7 +18,7 @@ class Investment extends StatelessWidget {
         child: Column(children: [
           Text('Soy una inversión'),
           SizedBox(height: 80),
-          Text('Con mucha rentabilidad')
+          Text('Con mucha rentabilidad'),
         ]),
       ),
     );

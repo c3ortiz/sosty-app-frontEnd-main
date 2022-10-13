@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:my_first_app/main_screen.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:my_first_app/user.dart';
 
@@ -37,7 +38,14 @@ class _LoginScreenState extends State<LoginScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) => new MainScreen(user: user)));
-      } else {}
+      } else if (response.statusCode == 400) {
+        Fluttertoast.showToast(
+          msg: Utf8Decoder().convert(response.bodyBytes), // message
+          toastLength: Toast.LENGTH_SHORT, // length
+          gravity: ToastGravity.CENTER,
+          // location           // duration
+        );
+      }
     } catch (e) {
       rethrow;
     }

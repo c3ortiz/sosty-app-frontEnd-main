@@ -105,19 +105,13 @@ class _MainScreenState extends State<MainScreen> {
                         ])),
 
                     SizedBox(height: 30),
-
                     //Investments
                     Container(
                       height: 200,
                       child: PageView(
                           controller: _controller,
                           scrollDirection: Axis.horizontal,
-                          children: [
-                            Investment(),
-                            Investment(),
-                            Investment(),
-                            Investment()
-                          ]),
+                          children: [Investment(), Investment()]),
                     ),
 
                     SizedBox(height: 19),

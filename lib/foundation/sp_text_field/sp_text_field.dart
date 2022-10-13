@@ -4,11 +4,16 @@ import 'package:flutter/material.dart';
 
 class SPTextFormField extends StatelessWidget {
   const SPTextFormField(
-      {Key? key, required this.labelText, required this.textEditingController})
+      {Key? key,
+      required this.labelText,
+      required this.textEditingController,
+      this.validator})
       : super(key: key);
 
   final String labelText;
   final TextEditingController textEditingController;
+
+  final String? Function(String? value)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +24,8 @@ class SPTextFormField extends StatelessWidget {
           color: Colors.grey,
           fontSize: 13,
         ),
-        validator: (value) {
-          print(value);
-          if (value!.isEmpty) {
-            return "Campo no puede estar vacío";
-          }
-          return null;
-        },
+        validator: validator,
+        controller: textEditingController,
         decoration: InputDecoration(
             labelText: labelText,
             labelStyle: const TextStyle(color: Colors.black54, fontSize: 13),
@@ -35,11 +35,12 @@ class SPTextFormField extends StatelessWidget {
                 color: Colors.grey,
               ),
             ),
-            focusedBorder: const OutlineInputBorder(
+            focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(
                 width: 1.5,
                 color: Colors.black54,
               ),
+              borderRadius: BorderRadius.circular(20),
             ),
             errorBorder: OutlineInputBorder(
               borderSide: BorderSide(width: 1.5, color: Colors.red),
