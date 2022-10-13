@@ -51,6 +51,25 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          backgroundColor: Color.fromRGBO(77, 208, 137, 1),
+          child: Icon(Icons.currency_bitcoin, size: 35),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: BottomAppBar(
+            color: Colors.grey.shade300,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 6, bottom: 6),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                        onPressed: () {}, icon: Icon(Icons.home, size: 33)),
+                    IconButton(
+                        onPressed: () {}, icon: Icon(Icons.person, size: 33))
+                  ]),
+            )),
         body: RefreshIndicator(
             onRefresh: refresh,
             child: SingleChildScrollView(
