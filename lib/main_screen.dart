@@ -44,6 +44,8 @@ class _MainScreenState extends State<MainScreen> {
           userType: userinformation.userType,
           balance: userinformation.balance);
 
+      getInvestorID();
+
       user.user = reloadUserInfo;
     } else {
       print(response.body);
@@ -57,7 +59,6 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => refresh());
     WidgetsBinding.instance.addPostFrameCallback((_) => getInvestorID());
-    setState(() {});
   }
 
   Future getInvestorID() async {
@@ -73,6 +74,7 @@ class _MainScreenState extends State<MainScreen> {
 
     Map<String, dynamic> map = jsonDecode(response.body);
     investmentInformation = GetInvestmentsInProgressByInvestorDTO.fromJson(map);
+    setState(() {});
   }
 
   @override
