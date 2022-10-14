@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-class Investment extends StatelessWidget {
-  const Investment({super.key});
+class investmentsUI extends StatelessWidget {
+  const investmentsUI({super.key});
 
   @override
   Widget build(BuildContext context) {

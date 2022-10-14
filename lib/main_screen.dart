@@ -3,10 +3,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:my_first_app/investments.dart';
+import 'package:my_first_app/investmentsUI.dart';
 import 'package:my_first_app/model/user_information.dart';
 import 'package:my_first_app/user.dart';
 import 'package:http/http.dart' as http;
+import 'package:my_first_app/model/GetInvestmentsInProgressByInvestorDTO.dart';
 
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -22,6 +23,7 @@ class _MainScreenState extends State<MainScreen> {
   //Investments controller
   final _controller = PageController();
   final User user;
+  
 
   _MainScreenState(this.user);
 
@@ -45,6 +47,22 @@ class _MainScreenState extends State<MainScreen> {
     }
 
     setState(() {});
+  }
+
+  Future getInvestorID() async {
+    final queryParams = {'investorID': 'c61532ff-4863-4135-8b5f-973896517976'};
+    final url = 
+        Uri.parse('https://sosty-api.azurewebsites.net/api/Investment/GetInvestmentsInProgressByInvestor').replace(queryParameters: queryParams);
+    final response = await http.get(url,
+        headers: <String, String>{'Content-Type': 'application/json', 
+        'Authorization':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmYjRkMGNiLTJjMGYtNGZjYy1hNzBmLWQ2MmM0ODhjMzMwZiIsImVtYWlsIjoiY2VzYXJvcnRpemJxQGdtYWlsLmNvbSIsIm5iZiI6MTY2NDkwMjg1NSwiZXhwIjoxNjgwNDU0ODU1LCJpYXQiOjE2NjQ5MDI4NTV9.deIaMDbZLjzgA4W23LwCSzXsh7_8GXoC3Ov-mMsp8Bg'});
+
+    Map<String, dynamic> map = jsonDecode(response.body);
+    print(response.body);
+     var investmentInformation = GetInvestmentsInProgressByInvestorDTO.fromJson(map);
+
+     print(investmentInformation.items![0].project!.projectName);
+
   }
 
   @override
@@ -71,7 +89,7 @@ class _MainScreenState extends State<MainScreen> {
                   ]),
             )),
         body: RefreshIndicator(
-            onRefresh: refresh,
+            onRefresh: getInvestorID,
             child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
                 child: Column(
@@ -130,7 +148,7 @@ class _MainScreenState extends State<MainScreen> {
                       child: PageView(
                           controller: _controller,
                           scrollDirection: Axis.horizontal,
-                          children: [Investment(), Investment()]),
+                          children: [investmentsUI(), investmentsUI(), investmentsUI(), investmentsUI()]),
                     ),
 
                     SizedBox(height: 19),
