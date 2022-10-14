@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, unnecessary_new
+// ignore_for_file: prefer_const_constructors, unnecessary_new, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:my_first_app/main_screen.dart';

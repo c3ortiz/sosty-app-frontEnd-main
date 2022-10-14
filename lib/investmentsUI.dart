@@ -1,9 +1,9 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
 import 'package:flutter/material.dart';
+import 'package:my_first_app/model/GetInvestmentsInProgressByInvestorDTO.dart';
 
 class investmentsUI extends StatelessWidget {
-  const investmentsUI({super.key});
+  investmentsUI(this.projectName, {super.key});
+  String projectName;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class investmentsUI extends StatelessWidget {
             color: Color.fromRGBO(0, 189, 86, 0.4),
             borderRadius: BorderRadius.circular(16)),
         child: Column(children: [
-          Text('Soy una inversión'),
+          Text(projectName),
           SizedBox(height: 80),
           Text('Con mucha rentabilidad'),
         ]),

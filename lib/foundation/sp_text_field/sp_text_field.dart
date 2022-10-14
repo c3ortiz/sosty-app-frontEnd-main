@@ -30,6 +30,7 @@ class SPTextFormField extends StatelessWidget {
             labelText: labelText,
             labelStyle: const TextStyle(color: Colors.black54, fontSize: 13),
             enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(
                 width: 1,
                 color: Colors.grey,
@@ -40,7 +41,7 @@ class SPTextFormField extends StatelessWidget {
                 width: 1.5,
                 color: Colors.black54,
               ),
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(12),
             ),
             errorBorder: OutlineInputBorder(
               borderSide: BorderSide(width: 1.5, color: Colors.red),

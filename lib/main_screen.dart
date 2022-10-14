@@ -13,19 +13,22 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class MainScreen extends StatefulWidget {
   final User user;
-  const MainScreen({super.key, required this.user});
+  final GetInvestmentsInProgressByInvestorDTO? investmentInformation;
+
+  const MainScreen({super.key, required this.user, this.investmentInformation});
 
   @override
-  State<MainScreen> createState() => _MainScreenState(user);
+  State<MainScreen> createState() =>
+      _MainScreenState(user, investmentInformation);
 }
 
 class _MainScreenState extends State<MainScreen> {
   //Investments controller
   final _controller = PageController();
   final User user;
-  
+  GetInvestmentsInProgressByInvestorDTO? investmentInformation;
 
-  _MainScreenState(this.user);
+  _MainScreenState(this.user, this.investmentInformation);
 
   Future refresh() async {
     final url =
@@ -49,20 +52,27 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {});
   }
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => refresh());
+    WidgetsBinding.instance.addPostFrameCallback((_) => getInvestorID());
+    setState(() {});
+  }
+
   Future getInvestorID() async {
     final queryParams = {'investorID': 'c61532ff-4863-4135-8b5f-973896517976'};
-    final url = 
-        Uri.parse('https://sosty-api.azurewebsites.net/api/Investment/GetInvestmentsInProgressByInvestor').replace(queryParameters: queryParams);
-    final response = await http.get(url,
-        headers: <String, String>{'Content-Type': 'application/json', 
-        'Authorization':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmYjRkMGNiLTJjMGYtNGZjYy1hNzBmLWQ2MmM0ODhjMzMwZiIsImVtYWlsIjoiY2VzYXJvcnRpemJxQGdtYWlsLmNvbSIsIm5iZiI6MTY2NDkwMjg1NSwiZXhwIjoxNjgwNDU0ODU1LCJpYXQiOjE2NjQ5MDI4NTV9.deIaMDbZLjzgA4W23LwCSzXsh7_8GXoC3Ov-mMsp8Bg'});
+    final url = Uri.parse(
+            'https://sosty-api.azurewebsites.net/api/Investment/GetInvestmentsInProgressByInvestor')
+        .replace(queryParameters: queryParams);
+    final response = await http.get(url, headers: <String, String>{
+      'Content-Type': 'application/json',
+      'Authorization':
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmYjRkMGNiLTJjMGYtNGZjYy1hNzBmLWQ2MmM0ODhjMzMwZiIsImVtYWlsIjoiY2VzYXJvcnRpemJxQGdtYWlsLmNvbSIsIm5iZiI6MTY2NDkwMjg1NSwiZXhwIjoxNjgwNDU0ODU1LCJpYXQiOjE2NjQ5MDI4NTV9.deIaMDbZLjzgA4W23LwCSzXsh7_8GXoC3Ov-mMsp8Bg'
+    });
 
     Map<String, dynamic> map = jsonDecode(response.body);
-    print(response.body);
-     var investmentInformation = GetInvestmentsInProgressByInvestorDTO.fromJson(map);
-
-     print(investmentInformation.items![0].project!.projectName);
-
+    investmentInformation = GetInvestmentsInProgressByInvestorDTO.fromJson(map);
   }
 
   @override
@@ -143,21 +153,27 @@ class _MainScreenState extends State<MainScreen> {
 
                     SizedBox(height: 30),
                     //Investments
+
                     Container(
                       height: 200,
                       child: PageView(
                           controller: _controller,
                           scrollDirection: Axis.horizontal,
-                          children: [investmentsUI(), investmentsUI(), investmentsUI(), investmentsUI()]),
+                          children: [
+                            if (investmentInformation != null)
+                              for (var items in investmentInformation!.items!)
+                                investmentsUI(items.project!.projectName!)
+                          ]),
                     ),
 
                     SizedBox(height: 19),
 
-                    SmoothPageIndicator(
-                        controller: _controller,
-                        count: 4,
-                        effect: ExpandingDotsEffect(
-                            activeDotColor: Colors.grey.shade800)),
+                    if (investmentInformation != null)
+                      (SmoothPageIndicator(
+                          controller: _controller,
+                          count: investmentInformation!.items!.length,
+                          effect: ExpandingDotsEffect(
+                              activeDotColor: Colors.grey.shade800))),
 
                     //Balance
                     SizedBox(height: 30),

@@ -236,7 +236,7 @@ class Project {
   String? projectImageUrl4;
   int? investmentRequired;
   int? minimumInvestmentRequired;
-  double? investmentCollected;
+  dynamic investmentCollected;
   String? collectDeadline;
   String? createDate;
   String? updateDate;
@@ -254,7 +254,7 @@ class Project {
   int? cattleWeightAverageGain;
   int? totalBatchWeight;
   int? amountOfCattles;
-  double? projectProfitability;
+  dynamic projectProfitability;
   String? hasSostyAudit;
   String? hasSostyInsurance;
   String? farmName;
@@ -264,7 +264,7 @@ class Project {
   String? locationArrivalLIndications;
   String? locationSize;
   int? producerCommission;
-  double? estimatedFreightCost;
+  dynamic estimatedFreightCost;
   String? locationLatitude;
   String? locationLongitude;
   String? locationIsRented;
@@ -287,13 +287,13 @@ class Project {
   int? initialWeight;
   int? finalWeight;
   String? projectStory;
-  double? insurancePricePerKilogram;
+  dynamic insurancePricePerKilogram;
   int? totalMoneyCollected;
-  double? mandatoPercentage;
+  dynamic mandatoPercentage;
   bool? isBlockedForInvestment;
-  double? fourPerThousandPerKilogram;
-  double? orejerasPerKilogram;
-  double? totalPricePerKilogram;
+  dynamic fourPerThousandPerKilogram;
+  dynamic orejerasPerKilogram;
+  dynamic totalPricePerKilogram;
   int? sostyComissionOnSale;
   int? calvesPercentage;
   int? calveWeigthAtWeaning;
@@ -308,7 +308,7 @@ class Project {
   int? totalSostyComercialization;
   int? totalCostBreedingProject;
   int? totalUnits;
-  double? unitPrice;
+  dynamic unitPrice;
   String? calvesRevenue;
   String? liquidationRevenue;
   String? amountOfCalvesToSell;
@@ -455,13 +455,15 @@ class Project {
     locationLongitude = json['locationLongitude'] ?? '';
     locationIsRented = json['locationIsRented'] ?? '';
     financialProjectionUrl = json['financialProjectionUrl'] ?? '';
-    libertadYTradicionCertificateUrl = json['libertadYTradicionCertificateUrl'] ?? '';
+    libertadYTradicionCertificateUrl =
+        json['libertadYTradicionCertificateUrl'] ?? '';
     usoDelSueloCertificateUrl = json['usoDelSueloCertificateUrl'] ?? '';
     registroSanitarioUrl = json['registroSanitarioUrl'] ?? '';
     ultimoSoporteVacunacionUrl = json['ultimoSoporteVacunacionUrl'] ?? '';
     contratoDeArriendoUrl = json['contratoDeArriendoUrl'] ?? '';
     contratoColaboracionUrl = json['contratoColaboracionUrl'] ?? '';
-    contratoPrestacionServiciosUrl = json['contratoPrestacionServiciosUrl'] ?? '';
+    contratoPrestacionServiciosUrl =
+        json['contratoPrestacionServiciosUrl'] ?? '';
     determinantesRiesgosAmbientalesYSocialesUrl =
         json['determinantesRiesgosAmbientalesYSocialesUrl'] ?? '';
     suraRelacionHatoGanaderoUrl = json['suraRelacionHatoGanaderoUrl'] ?? '';
@@ -620,8 +622,8 @@ class Investment {
   String? contratoMandatoUrl;
   String? createDate;
   String? deleteDate;
-  double? totalKilograms;
-  double? totalCattles;
+  dynamic totalKilograms;
+  dynamic totalCattles;
   bool? reviewMade;
   int? totalUnits;
   String? epaycoTransactionRef;
