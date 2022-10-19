@@ -8,18 +8,24 @@ import 'package:my_first_app/model/user_information.dart';
 import 'package:my_first_app/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:my_first_app/model/GetInvestmentsInProgressByInvestorDTO.dart';
+import 'package:my_first_app/user_profile_screen.dart';
 
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class MainScreen extends StatefulWidget {
   final User user;
   final GetInvestmentsInProgressByInvestorDTO? investmentInformation;
+  final UserInformation? userInformation;
 
-  const MainScreen({super.key, required this.user, this.investmentInformation});
+  const MainScreen(
+      {super.key,
+      required this.user,
+      this.investmentInformation,
+      this.userInformation});
 
   @override
   State<MainScreen> createState() =>
-      _MainScreenState(user, investmentInformation);
+      _MainScreenState(user, investmentInformation, userInformation);
 }
 
 class _MainScreenState extends State<MainScreen> {
@@ -27,8 +33,9 @@ class _MainScreenState extends State<MainScreen> {
   final _controller = PageController();
   final User user;
   GetInvestmentsInProgressByInvestorDTO? investmentInformation;
+  UserInformation? userInformation;
 
-  _MainScreenState(this.user, this.investmentInformation);
+  _MainScreenState(this.user, this.investmentInformation, this.userInformation);
 
   Future refresh() async {
     final url =
@@ -36,13 +43,14 @@ class _MainScreenState extends State<MainScreen> {
     final response = await http.get(url,
         headers: <String, String>{'Content-Type': 'application/json'});
 
-    Map<String, dynamic> map = jsonDecode(response.body);
-    var userinformation = UserInformation.fromJson(map);
+    Map<String, dynamic> map = jsonDecode(utf8.decode(response.bodyBytes));
+    userInformation = UserInformation.fromJson(map);
     if (response.statusCode == 200) {
       UserInfo reloadUserInfo = UserInfo(
-          userID: userinformation.userID,
-          userType: userinformation.userType,
-          balance: userinformation.balance);
+          userID: userInformation!.userID,
+          userType: userInformation!.userType,
+          balance: userInformation!.balance,
+          email: userInformation!.email);
 
       getInvestorID();
 
@@ -95,9 +103,25 @@ class _MainScreenState extends State<MainScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     IconButton(
-                        onPressed: () {}, icon: Icon(Icons.home, size: 33)),
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      new MainScreen(user: user)));
+                        },
+                        icon: Icon(Icons.home, size: 33)),
                     IconButton(
-                        onPressed: () {}, icon: Icon(Icons.person, size: 33))
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => new UserProfileScreen(
+                                        user: user,
+                                        userInformation: userInformation,
+                                      )));
+                        },
+                        icon: Icon(Icons.person, size: 33))
                   ]),
             )),
         body: RefreshIndicator(

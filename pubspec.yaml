@@ -68,6 +68,7 @@ flutter:
   assets:
     - assets/images/sostyLogo.png
     - assets/images/sostyLogo.jpg
+    - assets/images/profile.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
