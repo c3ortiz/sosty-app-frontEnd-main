@@ -92,37 +92,40 @@ class _MainScreenState extends State<MainScreen> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
           backgroundColor: Color.fromRGBO(77, 208, 137, 1),
-          child: Icon(Icons.currency_bitcoin, size: 35),
+          child: Icon(Icons.add, size: 35),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: BottomAppBar(
-            color: Colors.grey.shade300,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 6, bottom: 6),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      new MainScreen(user: user)));
-                        },
-                        icon: Icon(Icons.home, size: 33)),
-                    IconButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => new UserProfileScreen(
-                                        user: user,
-                                        userInformation: userInformation,
-                                      )));
-                        },
-                        icon: Icon(Icons.person, size: 33))
-                  ]),
+        bottomNavigationBar: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade300,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0)),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0)),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 6, bottom: 6),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      IconButton(
+                          onPressed: () {}, icon: Icon(Icons.home, size: 33)),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => new UserProfileScreen(
+                                          user: user,
+                                          userInformation: userInformation,
+                                        )));
+                          },
+                          icon: Icon(Icons.person, size: 33))
+                    ]),
+              ),
             )),
         body: RefreshIndicator(
             onRefresh: getInvestorID,

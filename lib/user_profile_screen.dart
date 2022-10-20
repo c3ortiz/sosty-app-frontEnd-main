@@ -30,8 +30,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         child: Icon(Icons.currency_bitcoin, size: 35),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
-          color: Colors.grey.shade300,
+      bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: Colors.grey.shade300,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.0),
+                topRight: Radius.circular(30.0)),
+          ),
           child: Padding(
             padding: const EdgeInsets.only(top: 6, bottom: 6),
             child: Row(
@@ -99,41 +104,38 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ],
             ),
           ),
-          Expanded(
-            flex: 5,
-            child: Container(
-              padding: const EdgeInsets.only(top: 20, left: 24, right: 24),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(50),
-                    topRight: Radius.circular(50)),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Información",
-                    style: TextStyle(
-                        fontFamily: GoogleFonts.montserrat().fontFamily,
-                        color: Colors.black54,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  listProfile(Icons.person, "Nombre completo",
-                      " ${userInformation.profileDetails![0].firstName} ${userInformation.profileDetails![0].lastName}"),
-                  listProfile(Icons.date_range, "Fecha de nacimiento",
-                      "${userInformation.profileDetails![0].birthDate}"),
-                  listProfile(
-                      Icons.location_pin, "Ubicación", "Bogotá, Colombia"),
-                  listProfile(Icons.phone_iphone, "Teléfono", "3107833059"),
-                ],
-              ),
+          Container(
+            height: 600,
+            padding: const EdgeInsets.only(top: 20, left: 24, right: 24),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(50), topRight: Radius.circular(50)),
             ),
-          )
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Información",
+                  style: TextStyle(
+                      fontFamily: GoogleFonts.montserrat().fontFamily,
+                      color: Colors.black54,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                listProfile(Icons.person, "Nombre completo",
+                    " ${userInformation.profileDetails![0].firstName} ${userInformation.profileDetails![0].lastName}"),
+                listProfile(Icons.date_range, "Fecha de nacimiento",
+                    "${userInformation.profileDetails![0].birthDate}"),
+                listProfile(
+                    Icons.location_pin, "Ubicación", "Bogotá, Colombia"),
+                listProfile(Icons.phone_iphone, "Teléfono", "3107833059"),
+              ],
+            ),
+          ),
         ]),
       ),
     );
