@@ -254,7 +254,7 @@ class Project {
   int? cattleWeightAverageGain;
   int? totalBatchWeight;
   int? amountOfCattles;
-  dynamic projectProfitability;
+  double? projectProfitability;
   String? hasSostyAudit;
   String? hasSostyInsurance;
   String? farmName;

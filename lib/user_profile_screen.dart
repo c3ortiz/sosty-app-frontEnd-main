@@ -105,7 +105,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             ),
           ),
           Container(
-            height: 600,
+            height: 505,
             padding: const EdgeInsets.only(top: 20, left: 24, right: 24),
             decoration: const BoxDecoration(
               color: Colors.white,

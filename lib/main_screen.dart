@@ -180,22 +180,28 @@ class _MainScreenState extends State<MainScreen> {
                           Text(' Inversiones', style: TextStyle(fontSize: 30)),
                         ])),
 
-                    SizedBox(height: 30),
+                    SizedBox(height: 15),
                     //Investments
 
                     Container(
-                      height: 200,
+                      height: 475,
                       child: PageView(
                           controller: _controller,
                           scrollDirection: Axis.horizontal,
                           children: [
                             if (investmentInformation != null)
                               for (var items in investmentInformation!.items!)
-                                investmentsUI(items.project!.projectName!)
+                                investmentsUI(
+                                    items.project!.projectName!,
+                                    items.project!.projectImageUrl1!,
+                                    items.project!.totalUnits!,
+                                    items.project!.minimumInvestmentRequired!,
+                                    items.project!.projectStatus!,
+                                    items.project!.projectProfitability!)
                           ]),
                     ),
 
-                    SizedBox(height: 19),
+                    SizedBox(height: 15),
 
                     if (investmentInformation != null)
                       (SmoothPageIndicator(
