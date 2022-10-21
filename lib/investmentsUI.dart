@@ -16,7 +16,7 @@ class investmentsUI extends StatelessWidget {
   int totalUnits;
   int minimumInvestmentRequired;
   String projectStatus;
-  double projectProfitability;
+  dynamic projectProfitability;
 
   @override
   Widget build(BuildContext context) {

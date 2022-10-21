@@ -197,7 +197,7 @@ class _MainScreenState extends State<MainScreen> {
                                     items.project!.totalUnits!,
                                     items.project!.minimumInvestmentRequired!,
                                     items.project!.projectStatus!,
-                                    items.project!.projectProfitability!)
+                                    items.project!.projectProfitability)
                           ]),
                     ),
 

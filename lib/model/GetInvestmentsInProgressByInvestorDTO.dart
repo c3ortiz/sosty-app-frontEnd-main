@@ -254,7 +254,7 @@ class Project {
   int? cattleWeightAverageGain;
   int? totalBatchWeight;
   int? amountOfCattles;
-  double? projectProfitability;
+  dynamic projectProfitability;
   String? hasSostyAudit;
   String? hasSostyInsurance;
   String? farmName;
@@ -440,7 +440,7 @@ class Project {
     cattleWeightAverageGain = json['cattleWeightAverageGain'] ?? 0;
     totalBatchWeight = json['totalBatchWeight'] ?? 0;
     amountOfCattles = json['amountOfCattles'] ?? 0;
-    projectProfitability = json['projectProfitability'] ?? 0.0;
+    projectProfitability = json['projectProfitability'];
     hasSostyAudit = json['hasSostyAudit'] ?? '';
     hasSostyInsurance = json['hasSostyInsurance'] ?? '';
     farmName = json['farmName'] ?? '';
