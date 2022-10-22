@@ -16,7 +16,6 @@ class UserProfileScreen extends StatefulWidget {
       _UserProfileScreenState(user, userInformation!);
 }
 
-
 class _UserProfileScreenState extends State<UserProfileScreen> {
   final User user;
   final UserInformation userInformation;
@@ -33,10 +32,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: Container(
           decoration: BoxDecoration(
-            color: Colors.grey.shade300,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                topRight: Radius.circular(30.0)),
+            color: Colors.white,
+            border: Border.all(width: 1, color: Colors.black),
           ),
           child: Padding(
             padding: const EdgeInsets.only(top: 6, bottom: 6),

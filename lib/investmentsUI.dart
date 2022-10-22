@@ -34,7 +34,7 @@ class investmentsUI extends StatelessWidget {
               color: Color.fromRGBO(0, 189, 86, 0.4),
               borderRadius: BorderRadius.circular(16),
               image: DecorationImage(
-                  image: AssetImage('images/sostyLogo.jpg'),
+                  image: NetworkImage(projectImageUrl1),
                   //Image.file(File(imageData), width: 600.0, height: 290.0)
                   //.image,
                   fit: BoxFit.cover))),

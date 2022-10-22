@@ -119,43 +119,36 @@ class _MainScreenState extends State<MainScreen> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: Container(
-            decoration: BoxDecoration(
-              color: Colors.grey.shade300,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30.0),
-                  topRight: Radius.circular(30.0)),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30.0),
-                  topRight: Radius.circular(30.0)),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 6, bottom: 6),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.home,
-                            size: 33,
-                            color: Colors.black,
-                          )),
-                      IconButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => new UserProfileScreen(
-                                          user: user,
-                                          userInformation: userInformation,
-                                        )));
-                          },
-                          icon:
-                              Icon(Icons.person, size: 33, color: Colors.grey))
-                    ]),
-              ),
-            )),
+          decoration: BoxDecoration(
+            color: Colors.white10,
+            border: Border.all(width: 1, color: Colors.black),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 6, bottom: 6),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.home,
+                        size: 33,
+                        color: Colors.black,
+                      )),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => new UserProfileScreen(
+                                      user: user,
+                                      userInformation: userInformation,
+                                    )));
+                      },
+                      icon: Icon(Icons.person, size: 33, color: Colors.grey))
+                ]),
+          ),
+        ),
         body: RefreshIndicator(
             onRefresh: getInvestorID,
             child: SingleChildScrollView(
