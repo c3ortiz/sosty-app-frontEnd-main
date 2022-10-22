@@ -16,6 +16,7 @@ class UserProfileScreen extends StatefulWidget {
       _UserProfileScreenState(user, userInformation!);
 }
 
+
 class _UserProfileScreenState extends State<UserProfileScreen> {
   final User user;
   final UserInformation userInformation;
@@ -27,7 +28,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: Color.fromRGBO(77, 208, 137, 1),
-        child: Icon(Icons.currency_bitcoin, size: 35),
+        child: Icon(Icons.add, size: 35),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: Container(
@@ -51,9 +52,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                       user: user,
                                     )));
                       },
-                      icon: Icon(Icons.home, size: 33)),
+                      icon: Icon(Icons.home, size: 33, color: Colors.grey)),
                   IconButton(
-                      onPressed: () {}, icon: Icon(Icons.person, size: 33))
+                      onPressed: () {},
+                      icon: Icon(Icons.person, size: 33, color: Colors.black))
                 ]),
           )),
       backgroundColor: const Color.fromRGBO(77, 208, 137, 1),

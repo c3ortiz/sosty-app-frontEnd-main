@@ -1,7 +1,8 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, no_logic_in_create_state
 
+import 'dart:async';
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:my_first_app/investmentsUI.dart';
 import 'package:my_first_app/model/user_information.dart';
@@ -9,19 +10,21 @@ import 'package:my_first_app/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:my_first_app/model/GetInvestmentsInProgressByInvestorDTO.dart';
 import 'package:my_first_app/user_profile_screen.dart';
-
+import 'package:http/http.dart' show get;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:path_provider/path_provider.dart';
 
 class MainScreen extends StatefulWidget {
   final User user;
   final GetInvestmentsInProgressByInvestorDTO? investmentInformation;
   final UserInformation? userInformation;
 
-  const MainScreen(
-      {super.key,
-      required this.user,
-      this.investmentInformation,
-      this.userInformation});
+  const MainScreen({
+    super.key,
+    required this.user,
+    this.investmentInformation,
+    this.userInformation,
+  });
 
   @override
   State<MainScreen> createState() =>
@@ -62,11 +65,31 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {});
   }
 
+  Future getImageFromApi() async {
+    Uri? url = Uri.parse(
+        'https://sosty.blob.core.windows.net/sosty-public-files/20220118164751.jpeg');
+    /*if (investmentInformation != null)
+      for (var items in investmentInformation!.items!) {
+        url = Uri.parse(items.project!.projectImageUrl1!);
+      }*/
+    var response = await get(url);
+    var documentDirectory = await getApplicationDocumentsDirectory();
+    var firstPath = documentDirectory.path + "/images";
+    var filePathAndName = documentDirectory.path + '/images/projectImg.jpg';
+    await Directory(firstPath).create(recursive: true);
+    File file2 = new File(filePathAndName);
+    file2.writeAsBytesSync(response.bodyBytes);
+    setState(() {
+      var imageData = filePathAndName;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => refresh());
     WidgetsBinding.instance.addPostFrameCallback((_) => getInvestorID());
+    //getImageFromApi();
   }
 
   Future getInvestorID() async {
@@ -112,7 +135,12 @@ class _MainScreenState extends State<MainScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       IconButton(
-                          onPressed: () {}, icon: Icon(Icons.home, size: 33)),
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.home,
+                            size: 33,
+                            color: Colors.black,
+                          )),
                       IconButton(
                           onPressed: () {
                             Navigator.pushReplacement(
@@ -123,7 +151,8 @@ class _MainScreenState extends State<MainScreen> {
                                           userInformation: userInformation,
                                         )));
                           },
-                          icon: Icon(Icons.person, size: 33))
+                          icon:
+                              Icon(Icons.person, size: 33, color: Colors.grey))
                     ]),
               ),
             )),

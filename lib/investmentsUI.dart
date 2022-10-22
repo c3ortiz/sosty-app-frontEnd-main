@@ -1,6 +1,11 @@
+import 'dart:async';
+import 'dart:html';
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_first_app/model/GetInvestmentsInProgressByInvestorDTO.dart';
+import 'package:my_first_app/main_screen.dart';
 
 class investmentsUI extends StatelessWidget {
   investmentsUI(
@@ -20,6 +25,7 @@ class investmentsUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var imageData;
     return Column(children: [
       Container(
           width: 350,
@@ -28,7 +34,9 @@ class investmentsUI extends StatelessWidget {
               color: Color.fromRGBO(0, 189, 86, 0.4),
               borderRadius: BorderRadius.circular(16),
               image: DecorationImage(
-                  image: AssetImage("assets/images/sostyLogo.jpg"),
+                  image: AssetImage('images/sostyLogo.jpg'),
+                  //Image.file(File(imageData), width: 600.0, height: 290.0)
+                  //.image,
                   fit: BoxFit.cover))),
       SizedBox(height: 10),
       Container(
