@@ -65,31 +65,11 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {});
   }
 
-  Future getImageFromApi() async {
-    Uri? url = Uri.parse(
-        'https://sosty.blob.core.windows.net/sosty-public-files/20220118164751.jpeg');
-    /*if (investmentInformation != null)
-      for (var items in investmentInformation!.items!) {
-        url = Uri.parse(items.project!.projectImageUrl1!);
-      }*/
-    var response = await get(url);
-    var documentDirectory = await getApplicationDocumentsDirectory();
-    var firstPath = documentDirectory.path + "/images";
-    var filePathAndName = documentDirectory.path + '/images/projectImg.jpg';
-    await Directory(firstPath).create(recursive: true);
-    File file2 = new File(filePathAndName);
-    file2.writeAsBytesSync(response.bodyBytes);
-    setState(() {
-      var imageData = filePathAndName;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => refresh());
     WidgetsBinding.instance.addPostFrameCallback((_) => getInvestorID());
-    //getImageFromApi();
   }
 
   Future getInvestorID() async {
@@ -164,7 +144,7 @@ class _MainScreenState extends State<MainScreen> {
                         ),
                         color: Color.fromRGBO(77, 208, 137, 1),
                       ),
-                      height: 150,
+                      height: 100,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -219,7 +199,9 @@ class _MainScreenState extends State<MainScreen> {
                                     items.project!.totalUnits!,
                                     items.project!.minimumInvestmentRequired!,
                                     items.project!.projectStatus!,
-                                    items.project!.projectProfitability)
+                                    items.project!.projectProfitability,
+                                    items.project!.startDate,
+                                    items.project!.endDate)
                           ]),
                     ),
 

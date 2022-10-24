@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:html';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -15,6 +14,8 @@ class investmentsUI extends StatelessWidget {
       this.minimumInvestmentRequired,
       this.projectStatus,
       this.projectProfitability,
+      this.startDate,
+      this.endDate,
       {super.key});
   String projectName;
   String projectImageUrl1;
@@ -22,10 +23,18 @@ class investmentsUI extends StatelessWidget {
   int minimumInvestmentRequired;
   String projectStatus;
   dynamic projectProfitability;
+  dynamic startDate;
+  dynamic endDate;
 
   @override
   Widget build(BuildContext context) {
     var imageData;
+    var duration;
+    DateTime dtStart = DateTime.parse(startDate);
+    DateTime dtEnd = DateTime.parse(endDate);
+
+    duration = dtEnd.difference(dtStart).inDays;
+
     return Column(children: [
       Container(
           width: 350,
@@ -34,10 +43,7 @@ class investmentsUI extends StatelessWidget {
               color: Color.fromRGBO(0, 189, 86, 0.4),
               borderRadius: BorderRadius.circular(16),
               image: DecorationImage(
-                  image: NetworkImage(projectImageUrl1),
-                  //Image.file(File(imageData), width: 600.0, height: 290.0)
-                  //.image,
-                  fit: BoxFit.cover))),
+                  image: NetworkImage(projectImageUrl1), fit: BoxFit.fill))),
       SizedBox(height: 10),
       Container(
         padding: EdgeInsets.all(8),
@@ -57,25 +63,17 @@ class investmentsUI extends StatelessWidget {
                   fontFamily: GoogleFonts.montserrat().fontFamily),
             ),
             SizedBox(height: 10),
-            Text(
-              projectImageUrl1,
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                  fontSize: 15,
-                  fontFamily: GoogleFonts.montserrat().fontFamily),
-            ),
             listProfile(
-                Icons.grass, "Unidades totales", " ${totalUnits.toString()}"),
+                Icons.grass, "Unidades totales", "${totalUnits.toString()}"),
             listProfile(Icons.monetization_on, "Inversión mínima",
-                " ${minimumInvestmentRequired.toString()}"),
-            listProfile(Icons.label_sharp, "Estado", " ${projectStatus}"),
+                "${minimumInvestmentRequired.toString()}"),
+            listProfile(Icons.label_sharp, "Estado", "${projectStatus}"),
             listProfile(
                 Icons.keyboard_double_arrow_up,
                 "Rentabilidad estimada*",
-                " ${projectProfitability.toString()} % (E.A)"),
-
-            //No sé porque lo convierte a 2 si es 15.29
-            //falta numero ganaderos y duracion
+                "${projectProfitability.toString()} % (E.A)"),
+            listProfile(Icons.watch, "Duración", "${duration} dias"),
+            listProfile(Icons.people, "Neoganaderos", "${projectStatus}"),
           ],
         ),
       ),
@@ -85,7 +83,7 @@ class investmentsUI extends StatelessWidget {
   Widget listProfile(IconData icon, String text1, String text2) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.only(top: 20),
+      margin: const EdgeInsets.only(top: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
