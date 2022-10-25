@@ -42,12 +42,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => new MainScreen(
-                                      user: user,
-                                    )));
+                        Navigator.pop(
+                          context,
+                        );
                       },
                       icon: Icon(Icons.home, size: 33, color: Colors.grey)),
                   IconButton(

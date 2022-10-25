@@ -117,13 +117,30 @@ class _MainScreenState extends State<MainScreen> {
                       )),
                   IconButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => new UserProfileScreen(
-                                      user: user,
-                                      userInformation: userInformation,
-                                    )));
+                            PageRouteBuilder(
+                                transitionDuration: Duration(seconds: 1),
+                                transitionsBuilder: (BuildContext context,
+                                    Animation<double> animation,
+                                    Animation<double> secAnimation,
+                                    Widget child) {
+                                  animation = CurvedAnimation(
+                                      parent: animation,
+                                      curve: Curves.easeInOutExpo);
+                                  return ScaleTransition(
+                                      scale: animation,
+                                      child: child,
+                                      alignment: Alignment.center);
+                                },
+                                pageBuilder: (BuildContext context,
+                                    Animation<double> animation,
+                                    Animation<double> secAnimation) {
+                                  return UserProfileScreen(
+                                    user: user,
+                                    userInformation: userInformation,
+                                  );
+                                }));
                       },
                       icon: Icon(Icons.person, size: 33, color: Colors.grey))
                 ]),
