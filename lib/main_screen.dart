@@ -73,14 +73,13 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Future getInvestorID() async {
-    final queryParams = {'investorID': 'c61532ff-4863-4135-8b5f-973896517976'};
+    final queryParams = {'investorID': user.user.userID};
     final url = Uri.parse(
             'https://sosty-api.azurewebsites.net/api/Investment/GetInvestmentsInProgressByInvestor')
         .replace(queryParameters: queryParams);
     final response = await http.get(url, headers: <String, String>{
       'Content-Type': 'application/json',
-      'Authorization':
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmYjRkMGNiLTJjMGYtNGZjYy1hNzBmLWQ2MmM0ODhjMzMwZiIsImVtYWlsIjoiY2VzYXJvcnRpemJxQGdtYWlsLmNvbSIsIm5iZiI6MTY2NDkwMjg1NSwiZXhwIjoxNjgwNDU0ODU1LCJpYXQiOjE2NjQ5MDI4NTV9.deIaMDbZLjzgA4W23LwCSzXsh7_8GXoC3Ov-mMsp8Bg'
+      'Authorization': user.accessToken.toString()
     });
 
     Map<String, dynamic> map = jsonDecode(response.body);

@@ -14,7 +14,7 @@ class User {
 class UserInfo {
   String? userID;
   String? userType;
-  String? balance;
+  dynamic balance;
   String? email;
 
   UserInfo(
@@ -27,7 +27,7 @@ class UserInfo {
     return UserInfo(
       userID: json["userID"] as String,
       userType: json["userType"] as String,
-      balance: json["balance"] ?? "0",
+      balance: json["balance"],
       email: json["email"] as String,
     );
   }
