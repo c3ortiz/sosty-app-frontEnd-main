@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_first_app/model/user_information.dart';
+import 'package:my_first_app/public_investments_screen.dart';
 import 'package:my_first_app/user.dart';
 
 import 'main_screen.dart';
@@ -25,7 +26,29 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context,
+              PageRouteBuilder(
+                  transitionDuration: Duration(seconds: 1),
+                  transitionsBuilder: (BuildContext context,
+                      Animation<double> animation,
+                      Animation<double> secAnimation,
+                      Widget child) {
+                    animation = CurvedAnimation(
+                        parent: animation, curve: Curves.easeInOutExpo);
+                    return ScaleTransition(
+                        scale: animation,
+                        child: child,
+                        alignment: Alignment.center);
+                  },
+                  pageBuilder: (BuildContext context,
+                      Animation<double> animation,
+                      Animation<double> secAnimation) {
+                    return PublicInvestmentsScreen(
+                        user: this.user, userInformation: this.userInformation);
+                  }));
+        },
         backgroundColor: Color.fromRGBO(77, 208, 137, 1),
         child: Icon(Icons.add, size: 35),
       ),
