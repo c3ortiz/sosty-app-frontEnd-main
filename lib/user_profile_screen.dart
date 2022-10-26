@@ -151,7 +151,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     "${userInformation.profileDetails![0].birthDate}"),
                 listProfile(
                     Icons.location_pin, "Ubicación", "Bogotá, Colombia"),
-                listProfile(Icons.phone_iphone, "Teléfono", "3107833059"),
+                listProfile(Icons.phone_iphone, "Teléfono", ""),
               ],
             ),
           ),

@@ -42,10 +42,10 @@ class _MainScreenState extends State<MainScreen> {
   _MainScreenState(this.user, this.investmentInformation, this.userInformation);
 
   Future refresh() async {
-    final queryParams = {'investorID': user.user.userID};
+    final queryParams = {'userID': user.user.userID};
 
     final url =
-        Uri.parse('https://pruebadessoc.getsandbox.com/api/User/GetUserbyID')
+        Uri.parse('https://sosty-api.azurewebsites.net/api/User/GetUserbyID')
             .replace(queryParameters: queryParams);
     final response = await http.get(url,
         headers: <String, String>{'Content-Type': 'application/json'});
@@ -150,7 +150,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ),
         body: RefreshIndicator(
-            onRefresh: getInvestorID,
+            onRefresh: refresh,
             child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
                 child: Column(
@@ -213,15 +213,7 @@ class _MainScreenState extends State<MainScreen> {
                           children: [
                             if (investmentInformation != null)
                               for (var items in investmentInformation!.items!)
-                                investmentsUI(
-                                    items.project!.projectName!,
-                                    items.project!.projectImageUrl1!,
-                                    items.project!.totalUnits!,
-                                    items.project!.minimumInvestmentRequired!,
-                                    items.project!.projectStatus!,
-                                    items.project!.projectProfitability,
-                                    items.project!.startDate,
-                                    items.project!.endDate)
+                                investmentsUI(items.project!)
                           ]),
                     ),
 

@@ -23,7 +23,7 @@ class UserInformation {
   String? activeCampaignDealId;
   int? activeCampaignDealStatus;
   String? activeCampaignDealStage;
-  String? balance;
+  dynamic balance;
   String? pageCreatedFrom;
   dynamic arrivalChannel;
   dynamic siigoCustomerID;

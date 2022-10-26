@@ -7,31 +7,14 @@ import 'package:my_first_app/model/GetInvestmentsInProgressByInvestorDTO.dart';
 import 'package:my_first_app/main_screen.dart';
 
 class investmentsUI extends StatelessWidget {
-  investmentsUI(
-      this.projectName,
-      this.projectImageUrl1,
-      this.totalUnits,
-      this.minimumInvestmentRequired,
-      this.projectStatus,
-      this.projectProfitability,
-      this.startDate,
-      this.endDate,
-      {super.key});
-  String projectName;
-  String projectImageUrl1;
-  int totalUnits;
-  int minimumInvestmentRequired;
-  String projectStatus;
-  dynamic projectProfitability;
-  dynamic startDate;
-  dynamic endDate;
-
+  investmentsUI(this.project, {super.key});
+  Project project;
   @override
   Widget build(BuildContext context) {
     var imageData;
     var duration;
-    DateTime dtStart = DateTime.parse(startDate);
-    DateTime dtEnd = DateTime.parse(endDate);
+    DateTime dtStart = DateTime.parse(project.startDate.toString());
+    DateTime dtEnd = DateTime.parse(project.endDate.toString());
 
     duration = dtEnd.difference(dtStart).inDays;
 
@@ -43,7 +26,8 @@ class investmentsUI extends StatelessWidget {
               color: Color.fromRGBO(0, 189, 86, 0.4),
               borderRadius: BorderRadius.circular(16),
               image: DecorationImage(
-                  image: NetworkImage(projectImageUrl1), fit: BoxFit.fill))),
+                  image: NetworkImage(project.projectImageUrl1.toString()),
+                  fit: BoxFit.fill))),
       SizedBox(height: 10),
       Container(
         padding: EdgeInsets.all(8),
@@ -55,7 +39,7 @@ class investmentsUI extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              projectName,
+              project.projectName.toString(),
               textAlign: TextAlign.left,
               style: TextStyle(
                   fontSize: 15,
@@ -64,16 +48,18 @@ class investmentsUI extends StatelessWidget {
             ),
             SizedBox(height: 10),
             listProfile(
-                Icons.grass, "Unidades totales", "${totalUnits.toString()}"),
+                Icons.grass, "Unidades totales", project.totalUnits.toString()),
             listProfile(Icons.monetization_on, "Inversión mínima",
-                "${minimumInvestmentRequired.toString()}"),
-            listProfile(Icons.label_sharp, "Estado", "${projectStatus}"),
+                project.minimumInvestmentRequired.toString()),
+            listProfile(
+                Icons.label_sharp, "Estado", "${project.projectStatus}"),
             listProfile(
                 Icons.keyboard_double_arrow_up,
                 "Rentabilidad estimada*",
-                "${projectProfitability.toString()} % (E.A)"),
+                "${project.projectProfitability.toString()} % (E.A)"),
             listProfile(Icons.watch, "Duración", "${duration} dias"),
-            listProfile(Icons.people, "Neoganaderos", "${projectStatus}"),
+            listProfile(
+                Icons.people, "Neoganaderos", "${project.projectStatus}"),
           ],
         ),
       ),
