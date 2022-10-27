@@ -40,65 +40,65 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
           backgroundColor: Color.fromRGBO(77, 208, 137, 1),
           child: Icon(Icons.close, size: 35),
         ),
-        body: SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
+        body: SafeArea(
             child: Column(
-              children: [
-                Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25),
-                    child: Row(children: [
-                      Text('Invierte con',
-                          style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold)),
-                      Text(' Nosotros', style: TextStyle(fontSize: 30)),
-                    ])),
+          children: [
+            SizedBox(height: 25),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25),
+                child: Row(children: [
+                  Text('Invierte con',
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                  Text(' Nosotros', style: TextStyle(fontSize: 30)),
+                ])),
 
-                SizedBox(height: 15),
-                //Investments
+            SizedBox(height: 70),
+            //Investments
 
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: Container(
-                    height: 475,
-                    child: PageView(
-                        controller: _controller,
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          Container(
-                              width: 300,
-                              height: 200,
-                              decoration: BoxDecoration(color: Colors.blue),
-                              child: Text('1')),
-                          Container(
-                              width: 300,
-                              height: 200,
-                              decoration: BoxDecoration(color: Colors.blue),
-                              child: Text('2')),
-                          Container(
-                              width: 300,
-                              height: 200,
-                              decoration: BoxDecoration(color: Colors.blue),
-                              child: Text('3')),
-                          Container(
-                              width: 300,
-                              height: 200,
-                              decoration: BoxDecoration(color: Colors.blue),
-                              child: Text('4'))
-                        ]),
-                  ),
-                ),
-
-                SizedBox(height: 15),
-
-                (SmoothPageIndicator(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Container(
+                height: 475,
+                child: PageView(
                     controller: _controller,
-                    count: 4,
-                    effect: ExpandingDotsEffect(
-                        activeDotColor: Colors.grey.shade800))),
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      Container(
+                          width: 300,
+                          height: 200,
+                          decoration: BoxDecoration(color: Colors.blue),
+                          child: Text('1')),
+                      Container(
+                          width: 300,
+                          height: 200,
+                          decoration: BoxDecoration(color: Colors.blue),
+                          child: Text('2')),
+                      Container(
+                          width: 300,
+                          height: 200,
+                          decoration: BoxDecoration(color: Colors.blue),
+                          child: Text('3')),
+                      Container(
+                          width: 300,
+                          height: 200,
+                          decoration: BoxDecoration(color: Colors.blue),
+                          child: Text('4'))
+                    ]),
+              ),
+            ),
 
-                //Balance
-                SizedBox(height: 30),
-              ],
-            )));
+            SizedBox(height: 15),
+
+            (SmoothPageIndicator(
+                controller: _controller,
+                count: 4,
+                effect:
+                    ExpandingDotsEffect(activeDotColor: Colors.grey.shade800))),
+
+            //Balance
+            SizedBox(height: 30),
+          ],
+        )));
   }
 }

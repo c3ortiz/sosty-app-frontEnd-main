@@ -188,11 +188,12 @@ class _MainScreenState extends State<MainScreen> {
                         ),
                         color: Color.fromRGBO(77, 208, 137, 1),
                       ),
-                      height: 100,
+                      height: 120,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          SizedBox(height: 20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
