@@ -238,7 +238,7 @@ class _MainScreenState extends State<MainScreen> {
                           children: [
                             if (investmentInformation != null)
                               for (var items in investmentInformation!.items!)
-                                investmentsUI(items.project!)
+                                investmentsUI(items.project!, user)
                           ]),
                     ),
 
@@ -251,7 +251,6 @@ class _MainScreenState extends State<MainScreen> {
                           effect: ExpandingDotsEffect(
                               activeDotColor: Colors.grey.shade800))),
 
-                    //Balance
                     SizedBox(height: 30),
                   ],
                 ))));
