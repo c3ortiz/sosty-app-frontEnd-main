@@ -46,7 +46,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       Animation<double> animation,
                       Animation<double> secAnimation) {
                     return PublicInvestmentsScreen(
-                        user: this.user, userInformation: this.userInformation);
+                        user: user, userInformation: userInformation);
                   }));
         },
         backgroundColor: Color.fromRGBO(77, 208, 137, 1),

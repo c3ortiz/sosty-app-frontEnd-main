@@ -238,7 +238,8 @@ class _MainScreenState extends State<MainScreen> {
                           children: [
                             if (investmentInformation != null)
                               for (var items in investmentInformation!.items!)
-                                investmentsUI(items.project!, user)
+                                investmentsUI(
+                                    items.project!, items.investment!, user)
                           ]),
                     ),
 

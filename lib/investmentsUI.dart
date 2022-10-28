@@ -1,17 +1,21 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_first_app/model/GetInvestmentsInProgressByInvestorDTO.dart';
 import 'package:my_first_app/main_screen.dart';
 import 'package:my_first_app/project_tracking_screen.dart';
 import 'package:my_first_app/user.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class investmentsUI extends StatelessWidget {
-  investmentsUI(this.project, this.user, {super.key});
+  investmentsUI(this.project, this.investment, this.user, {super.key});
   Project project;
+  Investment investment;
   User user;
+
   @override
   Widget build(BuildContext context) {
     var duration;
@@ -25,13 +29,13 @@ class investmentsUI extends StatelessWidget {
           Navigator.push(
               context,
               PageRouteBuilder(
-                  transitionDuration: Duration(seconds: 1),
+                  transitionDuration: Duration(milliseconds: 200),
                   transitionsBuilder: (BuildContext context,
                       Animation<double> animation,
                       Animation<double> secAnimation,
                       Widget child) {
                     animation = CurvedAnimation(
-                        parent: animation, curve: Curves.easeInOutExpo);
+                        parent: animation, curve: Curves.elasticIn);
                     return ScaleTransition(
                         scale: animation,
                         child: child,
@@ -40,19 +44,41 @@ class investmentsUI extends StatelessWidget {
                   pageBuilder: (BuildContext context,
                       Animation<double> animation,
                       Animation<double> secAnimation) {
-                    return ProjectTrackingScreen(user: user);
+                    return ProjectTrackingScreen(
+                      user: user,
+                      investment: investment,
+                    );
                   }));
         },
         child: Column(children: [
           Container(
               width: 350,
               height: 115,
-              decoration: BoxDecoration(
+              /*decoration: BoxDecoration(
                   color: Color.fromRGBO(0, 189, 86, 0.4),
                   borderRadius: BorderRadius.circular(16),
                   image: DecorationImage(
                       image: NetworkImage(project.projectImageUrl1.toString()),
-                      fit: BoxFit.fill))),
+                      fit: BoxFit.fill)),*/
+
+              child: CachedNetworkImage(
+                placeholder: (context, url) {
+                  return LoadingAnimationWidget.inkDrop(
+                    color: Colors.white,
+                    size: 50,
+                  );
+                },
+                imageUrl: project.projectImageUrl1.toString(),
+                imageBuilder: (context, imageProvider) => Container(
+                  width: 80.0,
+                  height: 80.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    image:
+                        DecorationImage(image: imageProvider, fit: BoxFit.fill),
+                  ),
+                ),
+              )),
           SizedBox(height: 10),
           Container(
             padding: EdgeInsets.all(8),
