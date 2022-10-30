@@ -44,6 +44,7 @@ dependencies:
   fluttertoast: ^8.0.9
   cached_network_image: ^3.2.2
   loading_animation_widget: ^1.2.0+3
+  syncfusion_flutter_charts: ^20.3.52
 
 dev_dependencies:
   flutter_test:
