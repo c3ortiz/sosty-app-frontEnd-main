@@ -68,69 +68,164 @@ class _ProjectTrackingScreen extends State<ProjectTrackingScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<dynamic>(
-        future: getProjectTracking(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return Column(
-              children: [
-                Text(
-                  "Animales",
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: GoogleFonts.montserrat().fontFamily),
-                ),
-                SfCircularChart(
-                    series: <CircularSeries>[
-                      // Renders doughnut chart
-                      DoughnutSeries<ChartData, String>(
-                          explode: true,
-                          dataSource: dataListCircular(snapshot.data),
-                          dataLabelSettings: DataLabelSettings(
-                              isVisible: true,
-                              labelPosition: ChartDataLabelPosition.inside,
-                              textStyle: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w200,
-                                  fontFamily:
-                                      GoogleFonts.montserrat().fontFamily)),
+      body: SingleChildScrollView(
+        child: FutureBuilder<dynamic>(
+          future: getProjectTracking(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return SafeArea(
+                  child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(12),
+                                  child: Text("\$ " +
+                                      dataInversionInicial(snapshot.data)),
+                                ),
+                                Container(
+                                  decoration: const BoxDecoration(
+                                      color: Color.fromRGBO(77, 208, 137, 1),
+                                      borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(12),
+                                          bottomLeft: Radius.circular(12))),
+                                  padding: const EdgeInsets.all(12),
+                                  child: const Text(
+                                    "Inversión inicial",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(12),
+                                  // ignore: prefer_interpolation_to_compose_strings
+                                  child: Text("\$ " +
+                                      dataInversionInicial(snapshot.data)),
+                                ),
+                                Container(
+                                  decoration: const BoxDecoration(
+                                      color: Color.fromRGBO(77, 208, 137, 1),
+                                      borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(12),
+                                          bottomLeft: Radius.circular(12))),
+                                  padding: const EdgeInsets.all(12),
+                                  child: const Text(
+                                    "Valor actual estimado",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Text(
+                    "Animales",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: GoogleFonts.montserrat().fontFamily),
+                  ),
+                  SfCircularChart(
+                      series: <CircularSeries>[
+                        // Renders doughnut chart
+                        DoughnutSeries<ChartData, String>(
+                            explode: true,
+                            dataSource: dataListCircular(snapshot.data),
+                            dataLabelSettings: DataLabelSettings(
+                                isVisible: true,
+                                labelPosition: ChartDataLabelPosition.inside,
+                                textStyle: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w200,
+                                    fontFamily:
+                                        GoogleFonts.montserrat().fontFamily)),
+                            pointColorMapper: (ChartData data, _) => data.color,
+                            xValueMapper: (ChartData data, _) => data.x,
+                            yValueMapper: (ChartData data, _) => data.y),
+                      ],
+                      legend: Legend(
+                          isVisible: true,
+                          textStyle: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w200,
+                              fontFamily:
+                                  GoogleFonts.montserrat().fontFamily))),
+                  Text(
+                    "Evolución Peso Lote",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: GoogleFonts.montserrat().fontFamily),
+                  ),
+                  SfCartesianChart(
+                    primaryXAxis: CategoryAxis(),
+                    series: <ChartSeries>[
+                      ColumnSeries<ChartData, String>(
+                          dataSource: dataListBars(snapshot.data),
                           pointColorMapper: (ChartData data, _) => data.color,
                           xValueMapper: (ChartData data, _) => data.x,
-                          yValueMapper: (ChartData data, _) => data.y),
+                          yValueMapper: (ChartData data, _) => data.y)
                     ],
-                    legend: Legend(
-                        isVisible: true,
-                        textStyle: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w200,
-                            fontFamily: GoogleFonts.montserrat().fontFamily))),
-                Text(
-                  "Evolución Peso Lote",
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: GoogleFonts.montserrat().fontFamily),
-                ),
-                SfCartesianChart(
-                  primaryXAxis: CategoryAxis(),
-                  series: <ChartSeries>[
-                    ColumnSeries<ChartData, String>(
-                        dataSource: dataListBars(snapshot.data),
-                        pointColorMapper: (ChartData data, _) => data.color,
-                        xValueMapper: (ChartData data, _) => data.x,
-                        yValueMapper: (ChartData data, _) => data.y)
-                  ],
-                )
-              ],
-            );
-          } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
-          return Center(
-              child: LoadingAnimationWidget.inkDrop(
-                  color: Colors.white, size: 25));
-        },
+                  )
+                ],
+              ));
+            } else if (snapshot.hasError) {
+              return Text('${snapshot.error}');
+            }
+            return Center(
+                child: LoadingAnimationWidget.inkDrop(
+                    color: Colors.white, size: 25));
+          },
+        ),
       ),
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(250, 250, 250, 100),
@@ -152,15 +247,15 @@ class _ProjectTrackingScreen extends State<ProjectTrackingScreen>
     List<ChartData> list = [
       ChartData(
           "0 a 7 mensual",
-          investmentInfo.weights![0].cantidadDeAnimalesGanananDe0a7,
+          investmentInfo.weights!.last.cantidadDeAnimalesGanananDe0a7,
           Color.fromARGB(255, 34, 142, 37)),
       ChartData(
           "7 a 10 mensual",
-          investmentInfo.weights![0].cantidadDeAnimalesGanananDe7a10,
+          investmentInfo.weights!.last.cantidadDeAnimalesGanananDe7a10,
           Color.fromARGB(255, 53, 173, 225)),
       ChartData(
           "Mas de 10 mensual",
-          investmentInfo.weights![0].cantidadDeAnimalesGanananMasDe10,
+          investmentInfo.weights!.last.cantidadDeAnimalesGanananMasDe10,
           Color.fromARGB(255, 230, 143, 36))
     ];
 
@@ -185,6 +280,13 @@ class _ProjectTrackingScreen extends State<ProjectTrackingScreen>
     }
 
     return list;
+  }
+
+  static dynamic dataInversionInicial(
+      GetProjectProgressInformation investmentInfo) {
+    return NumberFormat('#,##0', "en_US")
+        .format(investmentInfo.amountInvested)
+        .toString();
   }
 }
 

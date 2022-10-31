@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:my_first_app/model/user_information.dart';
 import 'package:my_first_app/public_investments_screen.dart';
 import 'package:my_first_app/user.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'main_screen.dart';
 
@@ -84,26 +86,39 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             child: Column(
               children: [
                 Container(
-                  height: 120,
-                  width: 120,
-                  margin: const EdgeInsets.only(top: 100, bottom: 8),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black26,
-                        offset: Offset(2, 2),
-                        blurRadius: 10,
-                      ),
-                    ],
-                    image: const DecorationImage(
-                      image: AssetImage(
-                        "assets/images/profile.png",
-                      ),
+                    height: 120,
+                    width: 120,
+                    margin: const EdgeInsets.only(top: 100, bottom: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black26,
+                          offset: Offset(2, 2),
+                          blurRadius: 10,
+                        ),
+                      ],
                     ),
-                  ),
-                ),
+                    child: CachedNetworkImage(
+                      placeholder: (context, url) {
+                        return LoadingAnimationWidget.inkDrop(
+                          color: Colors.white,
+                          size: 50,
+                        );
+                      },
+                      imageUrl:
+                          "${userInformation.profilePictureUrl ?? "assets/images/profile.png"}",
+                      imageBuilder: (context, imageProvider) => Container(
+                        width: 80.0,
+                        height: 80.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          image: DecorationImage(
+                              image: imageProvider, fit: BoxFit.fill),
+                        ),
+                      ),
+                    )),
                 Text(
                   userInformation.profileDetails![0].firstName!,
                   style: TextStyle(
