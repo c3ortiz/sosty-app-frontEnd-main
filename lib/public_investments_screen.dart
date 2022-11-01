@@ -4,6 +4,10 @@ import 'package:my_first_app/model/user_information.dart';
 import 'package:my_first_app/user.dart';
 import 'package:my_first_app/user_profile_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
 import 'model/GetInvestmentsInProgressByInvestorDTO.dart';
 
@@ -24,10 +28,36 @@ class PublicInvestmentsScreen extends StatefulWidget {
 
 class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
   final _controller = PageController();
-  _PublicInvestmentsScreenState(this.user, this.userInformation);
-
   UserInformation? userInformation;
   final User user;
+
+  _PublicInvestmentsScreenState(this.user, this.userInformation);
+
+  Future refresh() async {
+    final queryParams = {'userID': user.user.userID};
+
+    final url = Uri.parse(
+            'https://sosty-api.azurewebsites.net/api/Project/GetPublicTopProjects')
+        .replace(queryParameters: queryParams);
+    final response = await http.get(url,
+        headers: <String, String>{'Content-Type': 'application/json'});
+
+    Map<String, dynamic> map = jsonDecode(utf8.decode(response.bodyBytes));
+    userInformation = UserInformation.fromJson(map);
+    if (response.statusCode == 200) {
+      UserInfo reloadUserInfo = UserInfo(
+          userID: userInformation!.userID,
+          userType: userInformation!.userType,
+          balance: userInformation!.balance,
+          email: userInformation!.email);
+
+      user.user = reloadUserInfo;
+    } else {
+      print(response.body);
+    }
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
