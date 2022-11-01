@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -22,6 +24,8 @@ class UserProfileScreen extends StatefulWidget {
 class _UserProfileScreenState extends State<UserProfileScreen> {
   final User user;
   final UserInformation userInformation;
+
+  var imgFile = File('assets/images/profile.png');
 
   _UserProfileScreenState(this.user, this.userInformation);
   @override
@@ -107,8 +111,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           size: 50,
                         );
                       },
-                      imageUrl:
-                          "${userInformation.profilePictureUrl ?? "assets/images/profile.png"}",
+                      errorWidget: (context, url, error) =>
+                          Image.asset('assets/images/profile.png'),
+                      imageUrl: "${userInformation.profilePictureUrl}",
                       imageBuilder: (context, imageProvider) => Container(
                         width: 80.0,
                         height: 80.0,
