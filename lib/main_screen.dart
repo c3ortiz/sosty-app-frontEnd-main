@@ -220,12 +220,50 @@ class _MainScreenState extends State<MainScreen> {
                     //Mis inversiones statement
                     Padding(
                         padding: EdgeInsets.symmetric(horizontal: 25),
-                        child: Row(children: [
-                          Text('Mis',
-                              style: TextStyle(
-                                  fontSize: 30, fontWeight: FontWeight.bold)),
-                          Text(' Inversiones', style: TextStyle(fontSize: 30)),
-                        ])),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Mis Inversiones',
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold)),
+                              IconButton(
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Dialog(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(40)),
+                                          elevation: 16,
+                                          child: Container(
+                                            child: ListView(
+                                              shrinkWrap: true,
+                                              children: <Widget>[
+                                                SizedBox(height: 20),
+                                                Center(
+                                                    child: Text('Contactanos')),
+                                                SizedBox(height: 20),
+                                                _buildRow(Icons.whatsapp,
+                                                    Colors.green),
+                                                _buildRow(Icons.facebook,
+                                                    Colors.blue),
+                                                _buildRow(
+                                                    Icons.message_rounded,
+                                                    Color.fromRGBO(
+                                                        225, 48, 108, 1))
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                    ;
+                                  },
+                                  color: Colors.green,
+                                  icon: Icon(Icons.whatsapp_sharp))
+                            ])),
 
                     SizedBox(height: 15),
                     //Investments
@@ -256,4 +294,21 @@ class _MainScreenState extends State<MainScreen> {
                   ],
                 ))));
   }
+}
+
+Widget _buildRow(IconData iconData, Color colors) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+    child: Column(
+      children: <Widget>[
+        Container(height: 1, color: Color.fromARGB(255, 121, 121, 121)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            IconButton(onPressed: () {}, color: colors, icon: Icon(iconData)),
+          ],
+        ),
+      ],
+    ),
+  );
 }
