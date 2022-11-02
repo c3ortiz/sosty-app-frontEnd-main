@@ -46,6 +46,7 @@ dependencies:
   loading_animation_widget: ^1.2.0+3
   syncfusion_flutter_charts: ^20.3.52
   timelines: ^0.1.0
+  showcaseview: ^2.0.0+1
 
 dev_dependencies:
   flutter_test:
