@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_first_app/investmentsUI.dart';
+import 'package:my_first_app/model/GetPublicTopProjects.dart';
 import 'package:my_first_app/model/user_information.dart';
 import 'package:my_first_app/user.dart';
 import 'package:my_first_app/user_profile_screen.dart';
@@ -29,33 +30,29 @@ class PublicInvestmentsScreen extends StatefulWidget {
 class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
   final _controller = PageController();
   UserInformation? userInformation;
+  List<GetPublicTopProjects>? topProjects = [];
   final User user;
 
   _PublicInvestmentsScreenState(this.user, this.userInformation);
 
-  Future refresh() async {
-    final queryParams = {'userID': user.user.userID};
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => getTopProjects());
+  }
 
+  Future getTopProjects() async {
     final url = Uri.parse(
-            'https://sosty-api.azurewebsites.net/api/Project/GetPublicTopProjects')
-        .replace(queryParameters: queryParams);
+        'https://sosty-api.azurewebsites.net/api/Project/GetPublicTopProjects');
     final response = await http.get(url,
         headers: <String, String>{'Content-Type': 'application/json'});
 
-    Map<String, dynamic> map = jsonDecode(utf8.decode(response.bodyBytes));
-    userInformation = UserInformation.fromJson(map);
     if (response.statusCode == 200) {
-      UserInfo reloadUserInfo = UserInfo(
-          userID: userInformation!.userID,
-          userType: userInformation!.userType,
-          balance: userInformation!.balance,
-          email: userInformation!.email);
-
-      user.user = reloadUserInfo;
-    } else {
-      print(response.body);
+      List<dynamic> map = jsonDecode(utf8.decode(response.bodyBytes));
+      for (var i = 0; i < map.length; i++) {
+        topProjects!.add(GetPublicTopProjects.fromJson(map[i]));
+      }
     }
-
     setState(() {});
   }
 
@@ -94,41 +91,40 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
                     controller: _controller,
                     scrollDirection: Axis.horizontal,
                     children: [
-                      Container(
-                          width: 300,
-                          height: 200,
-                          decoration: BoxDecoration(color: Colors.blue),
-                          child: Text('1')),
-                      Container(
-                          width: 300,
-                          height: 200,
-                          decoration: BoxDecoration(color: Colors.blue),
-                          child: Text('2')),
-                      Container(
-                          width: 300,
-                          height: 200,
-                          decoration: BoxDecoration(color: Colors.blue),
-                          child: Text('3')),
-                      Container(
-                          width: 300,
-                          height: 200,
-                          decoration: BoxDecoration(color: Colors.blue),
-                          child: Text('4'))
+                      for (var items in topProjects!)
+                        Container(
+                            width: 300,
+                            height: 200,
+                            decoration: BoxDecoration(color: Colors.blue),
+                            child: Text(
+                              items.projectName.toString(),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                              textAlign: TextAlign.center,
+                            )),
                     ]),
               ),
             ),
 
             SizedBox(height: 15),
 
-            (SmoothPageIndicator(
-                controller: _controller,
-                count: 4,
-                effect:
-                    ExpandingDotsEffect(activeDotColor: Colors.grey.shade800))),
+            if (topProjects!.isNotEmpty)
+              (SmoothPageIndicator(
+                  controller: _controller,
+                  count: topProjects!.length,
+                  effect: ExpandingDotsEffect(
+                      activeDotColor: Colors.grey.shade800))),
 
             //Balance
             SizedBox(height: 30),
           ],
         )));
   }
+
+  // static Container makeContainersTopProjects() {
+  //   Container container;
+  //   for (var i = 0; i < topProjects; i++) {
+
+  //   }
+  // }
 }
