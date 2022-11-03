@@ -2,8 +2,11 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_first_app/investmentsUI.dart';
 import 'package:my_first_app/model/user_information.dart';
 import 'package:my_first_app/public_investments_screen.dart';
@@ -286,20 +289,103 @@ class _MainScreenState extends State<MainScreen> {
                           scrollDirection: Axis.horizontal,
                           children: [
                             if (investmentInformation != null)
-                              for (var items in investmentInformation!.items!)
-                                investmentsUI(
-                                    items.project!, items.investment!, user)
+                              if (investmentInformation!.items!.isNotEmpty)
+                                for (var items in investmentInformation!.items!)
+                                  investmentsUI(
+                                      items.project!, items.investment!, user)
+                              else
+                                Container(
+                                  padding: EdgeInsets.all(30),
+                                  child: RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text:
+                                              "Aún no tienes inversiones con nosotros, encuentra nuestras inversiones mas recientes ",
+                                          style: TextStyle(
+                                              fontFamily:
+                                                  GoogleFonts.montserrat()
+                                                      .fontFamily,
+                                              fontSize: 17,
+                                              color: Colors.black),
+                                        ),
+                                        TextSpan(
+                                            text: 'aquí',
+                                            style: TextStyle(
+                                                fontFamily:
+                                                    GoogleFonts.montserrat()
+                                                        .fontFamily,
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.bold,
+                                                color: Color.fromRGBO(
+                                                    77, 208, 137, 1)),
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () {
+                                                Navigator.push(
+                                                    context,
+                                                    PageRouteBuilder(
+                                                        transitionDuration:
+                                                            Duration(
+                                                                seconds: 1),
+                                                        transitionsBuilder:
+                                                            (BuildContext
+                                                                    context,
+                                                                Animation<
+                                                                        double>
+                                                                    animation,
+                                                                Animation<
+                                                                        double>
+                                                                    secAnimation,
+                                                                Widget child) {
+                                                          animation =
+                                                              CurvedAnimation(
+                                                                  parent:
+                                                                      animation,
+                                                                  curve: Curves
+                                                                      .easeInOutExpo);
+                                                          return ScaleTransition(
+                                                              scale: animation,
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child: child);
+                                                        },
+                                                        pageBuilder: (BuildContext
+                                                                context,
+                                                            Animation<double>
+                                                                animation,
+                                                            Animation<double>
+                                                                secAnimation) {
+                                                          return PublicInvestmentsScreen(
+                                                              user: user,
+                                                              userInformation:
+                                                                  userInformation);
+                                                        }));
+                                              }),
+                                      ],
+                                    ),
+                                  ),
+                                  // child: Text(
+                                  //   "Aún no tienes inversiones con nosotros, encuentra nuestras inversiones mas recientes en el botón +",
+                                  //   textAlign: TextAlign.left,
+                                  //   style: TextStyle(
+                                  //       fontSize: 17,
+                                  //       fontWeight: FontWeight.normal,
+                                  //       fontFamily: GoogleFonts.montserrat()
+                                  //           .fontFamily),
+                                  // ),
+                                )
                           ]),
                     ),
 
                     SizedBox(height: 15),
-
                     if (investmentInformation != null)
-                      (SmoothPageIndicator(
-                          controller: _controller,
-                          count: investmentInformation!.items!.length,
-                          effect: ExpandingDotsEffect(
-                              activeDotColor: Colors.grey.shade800))),
+                      if (investmentInformation!.items!.isNotEmpty)
+                        (SmoothPageIndicator(
+                            controller: _controller,
+                            count: investmentInformation!.items!.length,
+                            effect: ExpandingDotsEffect(
+                                activeDotColor: Colors.grey.shade800))),
 
                     SizedBox(height: 30),
                   ],
