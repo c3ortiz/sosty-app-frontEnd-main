@@ -18,6 +18,7 @@ import 'package:http/http.dart' show get;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MainScreen extends StatefulWidget {
   final User user;
@@ -100,33 +101,79 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-                context,
-                PageRouteBuilder(
-                    transitionDuration: Duration(seconds: 1),
-                    transitionsBuilder: (BuildContext context,
-                        Animation<double> animation,
-                        Animation<double> secAnimation,
-                        Widget child) {
-                      animation = CurvedAnimation(
-                          parent: animation, curve: Curves.easeInOutExpo);
-                      return ScaleTransition(
-                          scale: animation,
-                          child: child,
-                          alignment: Alignment.center);
+        floatingActionButton: Stack(
+          children: [
+            Positioned(
+              left: 180,
+              bottom: 40,
+              child: FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                          transitionDuration: Duration(seconds: 1),
+                          transitionsBuilder: (BuildContext context,
+                              Animation<double> animation,
+                              Animation<double> secAnimation,
+                              Widget child) {
+                            animation = CurvedAnimation(
+                                parent: animation, curve: Curves.easeInOutExpo);
+                            return ScaleTransition(
+                                scale: animation,
+                                child: child,
+                                alignment: Alignment.center);
+                          },
+                          pageBuilder: (BuildContext context,
+                              Animation<double> animation,
+                              Animation<double> secAnimation) {
+                            return PublicInvestmentsScreen(
+                                user: this.user,
+                                userInformation: this.userInformation);
+                          }));
+                },
+                backgroundColor: Color.fromRGBO(77, 208, 137, 1),
+                child: Icon(Icons.add, size: 35),
+              ),
+            ),
+            Positioned(
+              bottom: 80,
+              right: 20,
+              child: FloatingActionButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40)),
+                        elevation: 16,
+                        child: Container(
+                          child: ListView(
+                            shrinkWrap: true,
+                            children: <Widget>[
+                              SizedBox(height: 20),
+                              Center(child: Text('Contactanos')),
+                              SizedBox(height: 20),
+                              _buildRow(Icons.whatsapp, Colors.green,
+                                  'https://wa.me/+573204357649'),
+                              _buildRow(Icons.facebook, Colors.blue,
+                                  'https://wa.me/+573204357649'),
+                              _buildRow(
+                                  Icons.message_rounded,
+                                  Color.fromRGBO(225, 48, 108, 1),
+                                  'https://wa.me/+573204357649')
+                            ],
+                          ),
+                        ),
+                      );
                     },
-                    pageBuilder: (BuildContext context,
-                        Animation<double> animation,
-                        Animation<double> secAnimation) {
-                      return PublicInvestmentsScreen(
-                          user: this.user,
-                          userInformation: this.userInformation);
-                    }));
-          },
-          backgroundColor: Color.fromRGBO(77, 208, 137, 1),
-          child: Icon(Icons.add, size: 35),
+                  );
+                },
+                backgroundColor: Color.fromRGBO(77, 208, 137, 1),
+                child: Icon(Icons.contact_support, size: 35),
+              ),
+            ),
+          ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: Container(
@@ -235,42 +282,6 @@ class _MainScreenState extends State<MainScreen> {
                                   style: TextStyle(
                                       fontSize: 30,
                                       fontWeight: FontWeight.bold)),
-                              IconButton(
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return Dialog(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(40)),
-                                          elevation: 16,
-                                          child: Container(
-                                            child: ListView(
-                                              shrinkWrap: true,
-                                              children: <Widget>[
-                                                SizedBox(height: 20),
-                                                Center(
-                                                    child: Text('Contactanos')),
-                                                SizedBox(height: 20),
-                                                _buildRow(Icons.whatsapp,
-                                                    Colors.green),
-                                                _buildRow(Icons.facebook,
-                                                    Colors.blue),
-                                                _buildRow(
-                                                    Icons.message_rounded,
-                                                    Color.fromRGBO(
-                                                        225, 48, 108, 1))
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                    ;
-                                  },
-                                  color: Colors.green,
-                                  icon: Icon(Icons.whatsapp_sharp))
                             ])),
 
                     SizedBox(height: 15),
@@ -387,7 +398,13 @@ class _MainScreenState extends State<MainScreen> {
   }
 }
 
-Widget _buildRow(IconData iconData, Color colors) {
+Future<void> _launchUrl(Uri url) async {
+  if (!await launchUrl(url)) {
+    throw 'Could not launch $url';
+  }
+}
+
+Widget _buildRow(IconData iconData, Color colors, String urlMedia) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 20.0),
     child: Column(
@@ -396,7 +413,13 @@ Widget _buildRow(IconData iconData, Color colors) {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            IconButton(onPressed: () {}, color: colors, icon: Icon(iconData)),
+            IconButton(
+                onPressed: () {
+                  Uri url = Uri.parse(urlMedia);
+                  _launchUrl(url);
+                },
+                color: colors,
+                icon: Icon(iconData)),
           ],
         ),
       ],

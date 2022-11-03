@@ -9,22 +9,19 @@ import 'package:my_first_app/main_screen.dart';
 import 'package:my_first_app/project_tracking_screen.dart';
 import 'package:my_first_app/user.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:intl/intl.dart';
 
-class investmentsUI extends StatelessWidget {
-  investmentsUI(this.project, this.investment, this.user, {super.key});
+import 'model/GetPublicTopProjects.dart';
+
+class newInvestmentsUI extends StatelessWidget {
+  newInvestmentsUI(this.project, this.investment, this.user, this.topProjects,
+      {super.key});
+  List<GetPublicTopProjects>? topProjects = [];
   Project project;
   Investment investment;
   User user;
 
   @override
   Widget build(BuildContext context) {
-    var duration;
-    DateTime dtStart = DateTime.parse(project.startDate.toString());
-    DateTime dtEnd = DateTime.parse(project.endDate.toString());
-
-    duration = dtEnd.difference(dtStart).inDays;
-
     return InkWell(
         onTap: () {
           Navigator.push(
@@ -92,24 +89,8 @@ class investmentsUI extends StatelessWidget {
                       fontFamily: GoogleFonts.montserrat().fontFamily),
                 ),
                 SizedBox(height: 10),
-                listProfile(
-                    Icons.monetization_on,
-                    "Tu inversión",
-                    "\$ " +
-                        NumberFormat('#,##0', "es_CO")
-                            .format(investment.amountInvested)
-                            .toString()),
                 listProfile(Icons.grass, "Unidades totales",
                     project.totalUnits.toString()),
-                listProfile(
-                    Icons.label_sharp, "Estado", "${project.projectStatus}"),
-                listProfile(
-                    Icons.keyboard_double_arrow_up,
-                    "Rentabilidad estimada*",
-                    "${project.projectProfitability.toString()} % (E.A)"),
-                listProfile(Icons.watch, "Duración", "${duration} dias"),
-                listProfile(
-                    Icons.people, "Neoganaderos", "${project.projectStatus}"),
               ],
             ),
           ),

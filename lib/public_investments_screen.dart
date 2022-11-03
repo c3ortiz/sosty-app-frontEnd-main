@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_first_app/investmentsUI.dart';
+import 'package:my_first_app/newInvestmentsUI.dart';
 import 'package:my_first_app/model/GetPublicTopProjects.dart';
 import 'package:my_first_app/model/user_information.dart';
 import 'package:my_first_app/user.dart';
@@ -91,17 +92,11 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
                     controller: _controller,
                     scrollDirection: Axis.horizontal,
                     children: [
-                      for (var items in topProjects!)
-                        Container(
-                            width: 300,
-                            height: 200,
-                            decoration: BoxDecoration(color: Colors.blue),
-                            child: Text(
-                              items.projectName.toString(),
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                              textAlign: TextAlign.center,
-                            )),
+                      /*for (var items in topProjects!)*/
+
+                      /*newInvestmentsUI(
+                          
+                        )*/
                     ]),
               ),
             ),
