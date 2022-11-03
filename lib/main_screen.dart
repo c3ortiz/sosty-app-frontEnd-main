@@ -97,6 +97,23 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {});
   }
 
+  //Navbar logic
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 1: Business',
+      style: optionStyle,
+    )
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -176,54 +193,69 @@ class _MainScreenState extends State<MainScreen> {
           ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            color: Colors.white10,
-            border: Border.all(width: 1, color: Colors.black),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 6, bottom: 6),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.home,
-                        size: 33,
-                        color: Colors.black,
-                      )),
-                  IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                                transitionDuration: Duration(seconds: 1),
-                                transitionsBuilder: (BuildContext context,
-                                    Animation<double> animation,
-                                    Animation<double> secAnimation,
-                                    Widget child) {
-                                  animation = CurvedAnimation(
-                                      parent: animation,
-                                      curve: Curves.easeInOutExpo);
-                                  return ScaleTransition(
-                                      scale: animation,
-                                      child: child,
-                                      alignment: Alignment.center);
-                                },
-                                pageBuilder: (BuildContext context,
-                                    Animation<double> animation,
-                                    Animation<double> secAnimation) {
-                                  return UserProfileScreen(
-                                    user: user,
-                                    userInformation: userInformation,
-                                  );
-                                }));
-                      },
-                      icon: Icon(Icons.person, size: 33, color: Colors.grey))
-                ]),
-          ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
+            )
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Color.fromRGBO(77, 208, 137, 1),
+          onTap: _onItemTapped,
         ),
+        /*bottomNavigationBar: Container(
+            decoration: BoxDecoration(
+              color: Colors.white10,
+              border: Border.all(width: 1, color: Colors.black),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 6, bottom: 6),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.home,
+                          size: 33,
+                          color: Colors.black,
+                        )),
+                    IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                  transitionDuration: Duration(seconds: 1),
+                                  transitionsBuilder: (BuildContext context,
+                                      Animation<double> animation,
+                                      Animation<double> secAnimation,
+                                      Widget child) {
+                                    animation = CurvedAnimation(
+                                        parent: animation,
+                                        curve: Curves.easeInOutExpo);
+                                    return ScaleTransition(
+                                        scale: animation,
+                                        child: child,
+                                        alignment: Alignment.center);
+                                  },
+                                  pageBuilder: (BuildContext context,
+                                      Animation<double> animation,
+                                      Animation<double> secAnimation) {
+                                    return UserProfileScreen(
+                                      user: user,
+                                      userInformation: userInformation,
+                                    );
+                                  }));
+                        },
+                        icon: Icon(Icons.person, size: 33, color: Colors.grey))
+                  ]),
+            ),
+          )*/
         body: RefreshIndicator(
             onRefresh: refresh,
             child: SingleChildScrollView(
@@ -370,15 +402,6 @@ class _MainScreenState extends State<MainScreen> {
                                       ],
                                     ),
                                   ),
-                                  // child: Text(
-                                  //   "Aún no tienes inversiones con nosotros, encuentra nuestras inversiones mas recientes en el botón +",
-                                  //   textAlign: TextAlign.left,
-                                  //   style: TextStyle(
-                                  //       fontSize: 17,
-                                  //       fontWeight: FontWeight.normal,
-                                  //       fontFamily: GoogleFonts.montserrat()
-                                  //           .fontFamily),
-                                  // ),
                                 )
                           ]),
                     ),
