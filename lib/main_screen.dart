@@ -17,6 +17,7 @@ import 'package:my_first_app/user_profile_screen.dart';
 import 'package:http/http.dart' show get;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:intl/intl.dart';
 
 class MainScreen extends StatefulWidget {
   final User user;
@@ -200,7 +201,11 @@ class _MainScreenState extends State<MainScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("\$ ${user.user.balance}",
+                              Text(
+                                  "\$ " +
+                                      NumberFormat('#,##0', "es_CO")
+                                          .format(user.user.balance)
+                                          .toString(),
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 30,

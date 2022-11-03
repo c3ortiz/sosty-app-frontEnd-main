@@ -9,6 +9,7 @@ import 'package:my_first_app/main_screen.dart';
 import 'package:my_first_app/project_tracking_screen.dart';
 import 'package:my_first_app/user.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:intl/intl.dart';
 
 class investmentsUI extends StatelessWidget {
   investmentsUI(this.project, this.investment, this.user, {super.key});
@@ -98,10 +99,15 @@ class investmentsUI extends StatelessWidget {
                       fontFamily: GoogleFonts.montserrat().fontFamily),
                 ),
                 SizedBox(height: 10),
+                listProfile(
+                    Icons.monetization_on,
+                    "Tu inversión",
+                    "\$ " +
+                        NumberFormat('#,##0', "es_CO")
+                            .format(investment.amountInvested)
+                            .toString()),
                 listProfile(Icons.grass, "Unidades totales",
                     project.totalUnits.toString()),
-                listProfile(Icons.monetization_on, "Inversión mínima",
-                    project.minimumInvestmentRequired.toString()),
                 listProfile(
                     Icons.label_sharp, "Estado", "${project.projectStatus}"),
                 listProfile(

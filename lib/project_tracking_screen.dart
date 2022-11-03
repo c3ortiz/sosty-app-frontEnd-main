@@ -309,7 +309,7 @@ class _ProjectTrackingScreen extends State<ProjectTrackingScreen>
 
   static dynamic dataInversionInicial(
       GetProjectProgressInformation investmentInfo) {
-    return NumberFormat('#,##0', "en_US")
+    return NumberFormat('#,##0', "es_CO")
         .format(investmentInfo.amountInvested)
         .toString();
   }
@@ -321,12 +321,30 @@ class _ProjectTrackingScreen extends State<ProjectTrackingScreen>
       timeCards!.add(TimelineTile(
         oppositeContents: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text(investmentInfo.events![i].eventType.toString()),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+              Text(investmentInfo.events![i].eventType.toString()),
+              Text(
+                DateFormat('dd-MM-yyyy').format(DateTime.parse(
+                    investmentInfo.events![i].eventDate.toString())),
+                style: TextStyle(color: Colors.grey),
+              ),
+            ]),
+          ),
         ),
         contents: Card(
           child: Container(
             padding: EdgeInsets.all(8.0),
-            child: Text(investmentInfo.events![i].description.toString()),
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(investmentInfo.events![i].description.toString()),
+                  ],
+                )),
           ),
         ),
         node: TimelineNode(
