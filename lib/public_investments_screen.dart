@@ -161,7 +161,7 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
                                         "Rentabilidad estimada*",
                                         "${items.projectProfitability} % (E.A)"),
                                     listProfile(Icons.watch, "Duración",
-                                        items.projectDuration.toString()),
+                                        "${items.projectDuration.toString()} meses"),
                                     listProfile(Icons.people, "Ubicación",
                                         items.locationAddress.toString()),
                                   ],

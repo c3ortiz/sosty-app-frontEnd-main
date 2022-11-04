@@ -316,7 +316,7 @@ class _ProjectTrackingScreen extends State<ProjectTrackingScreen>
 
   static dynamic dataInversionEstimada(
       GetProjectProgressInformation investmentInfo) {
-    var inversionEstimada;
+    var inversionEstimada = 0.0;
     var duracionActual;
     var fechaInicial = DateTime.parse(investmentInfo.startDate.toString());
     var fechaFinal = DateTime.parse(investmentInfo.endDate.toString());
