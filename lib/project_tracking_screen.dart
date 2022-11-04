@@ -149,7 +149,7 @@ class _ProjectTrackingScreen extends State<ProjectTrackingScreen>
                                       padding: const EdgeInsets.all(12),
                                       // ignore: prefer_interpolation_to_compose_strings
                                       child: Text("\$ " +
-                                          dataInversionInicial(snapshot.data)),
+                                          dataInversionEstimada(snapshot.data)),
                                     ),
                                     Container(
                                       decoration: const BoxDecoration(
@@ -160,7 +160,7 @@ class _ProjectTrackingScreen extends State<ProjectTrackingScreen>
                                               bottomLeft: Radius.circular(12))),
                                       padding: const EdgeInsets.all(12),
                                       child: const Text(
-                                        "Valor actual estimado",
+                                        "Ganancia estimada",
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold),
@@ -312,6 +312,35 @@ class _ProjectTrackingScreen extends State<ProjectTrackingScreen>
     return NumberFormat('#,##0', "es_CO")
         .format(investmentInfo.amountInvested)
         .toString();
+  }
+
+  static dynamic dataInversionEstimada(
+      GetProjectProgressInformation investmentInfo) {
+    var inversionEstimada;
+    var duracionActual;
+    var fechaInicial = DateTime.parse(investmentInfo.startDate.toString());
+    var fechaFinal = DateTime.parse(investmentInfo.endDate.toString());
+    var fechaActual = DateTime.now();
+
+    if (fechaActual.compareTo(fechaFinal) < 0) {
+      duracionActual =
+          ((fechaActual.difference(fechaInicial).inDays) / 12).floor();
+      inversionEstimada = (((investmentInfo.projectProfitability / 100) / 12) *
+              duracionActual) *
+          int.parse(investmentInfo.amountInvested.toString());
+    } else if (fechaActual.compareTo(fechaFinal) > 0) {
+      duracionActual = int.parse(investmentInfo.projectDuration.toString());
+      inversionEstimada = (((investmentInfo.projectProfitability / 100) / 12) *
+              duracionActual) *
+          int.parse(investmentInfo.amountInvested.toString());
+    } else if (fechaActual.compareTo(fechaFinal) == 0) {
+      duracionActual = int.parse(investmentInfo.projectDuration.toString());
+      inversionEstimada = (((investmentInfo.projectProfitability / 100) / 12) *
+              duracionActual) *
+          int.parse(investmentInfo.amountInvested.toString());
+    }
+
+    return NumberFormat('#,##0', "es_CO").format(inversionEstimada).toString();
   }
 
   static List<TimelineTile> cardbuilder(

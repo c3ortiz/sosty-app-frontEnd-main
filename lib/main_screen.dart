@@ -141,7 +141,6 @@ class _MainScreenState extends State<MainScreen> {
               left: 180,
               bottom: 40,
               child: FloatingActionButton(
-                heroTag: 'navBar',
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -152,7 +151,7 @@ class _MainScreenState extends State<MainScreen> {
                               Animation<double> secAnimation,
                               Widget child) {
                             animation = CurvedAnimation(
-                                parent: animation, curve: Curves.easeInOutExpo);
+                                parent: animation, curve: Curves.fastOutSlowIn);
                             return ScaleTransition(
                                 scale: animation,
                                 child: child,
