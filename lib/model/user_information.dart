@@ -92,7 +92,7 @@ class UserInformation {
     activeCampaignDealId = json['activeCampaignDealId'];
     activeCampaignDealStatus = json['activeCampaignDealStatus'];
     activeCampaignDealStage = json['activeCampaignDealStage'];
-    balance = json['balance'] ?? "0";
+    balance = json['balance'] ?? int.parse("0");
     pageCreatedFrom = json['pageCreatedFrom'];
     arrivalChannel = json['arrivalChannel'];
     siigoCustomerID = json['siigoCustomerID'];

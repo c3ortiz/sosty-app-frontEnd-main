@@ -27,7 +27,7 @@ class UserInfo {
     return UserInfo(
       userID: json["userID"] as String,
       userType: json["userType"] as String,
-      balance: json["balance"],
+      balance: json["balance"] ??= int.parse("0"),
       email: json["email"] as String,
     );
   }
