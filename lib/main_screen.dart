@@ -4,9 +4,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:my_first_app/investmentsUI.dart';
 import 'package:my_first_app/model/user_information.dart';
 import 'package:my_first_app/public_investments_screen.dart';
@@ -19,6 +21,8 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+late UserInformation userInformation2;
 
 class MainScreen extends StatefulWidget {
   final User user;
@@ -97,20 +101,33 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {});
   }
 
-  //Navbar logic
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    )
-  ];
-
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      if (index == 1) {
+        Navigator.push(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  UserProfileScreen(
+                user: user,
+                userInformation: userInformation,
+              ),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                const begin = Offset(1.0, 0.0);
+                const end = Offset.zero;
+                const curve = Curves.ease;
+
+                var tween = Tween(begin: begin, end: end)
+                    .chain(CurveTween(curve: curve));
+
+                return SlideTransition(
+                  position: animation.drive(tween),
+                  child: child,
+                );
+              },
+            ));
+      }
     });
   }
 
@@ -124,6 +141,7 @@ class _MainScreenState extends State<MainScreen> {
               left: 180,
               bottom: 40,
               child: FloatingActionButton(
+                heroTag: 'navBar',
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -156,6 +174,7 @@ class _MainScreenState extends State<MainScreen> {
               bottom: 80,
               right: 20,
               child: FloatingActionButton(
+                heroTag: 'soporte',
                 onPressed: () {
                   showDialog(
                     context: context,
@@ -174,11 +193,11 @@ class _MainScreenState extends State<MainScreen> {
                               _buildRow(Icons.whatsapp, Colors.green,
                                   'https://wa.me/+573204357649'),
                               _buildRow(Icons.facebook, Colors.blue,
-                                  'https://wa.me/+573204357649'),
+                                  'https://m.me/100584411364471'),
                               _buildRow(
                                   Icons.message_rounded,
                                   Color.fromRGBO(225, 48, 108, 1),
-                                  'https://wa.me/+573204357649')
+                                  'https://www.instagram.com/sosty.co/')
                             ],
                           ),
                         ),
@@ -204,7 +223,7 @@ class _MainScreenState extends State<MainScreen> {
               label: 'Profile',
             )
           ],
-          currentIndex: _selectedIndex,
+          currentIndex: 0,
           selectedItemColor: Color.fromRGBO(77, 208, 137, 1),
           onTap: _onItemTapped,
         ),

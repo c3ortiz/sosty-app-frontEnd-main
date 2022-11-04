@@ -27,60 +27,43 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   var imgFile = File('assets/images/profile.png');
 
+  int _selectedIndex = 1;
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 1: Business',
+      style: optionStyle,
+    )
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      Navigator.pop(context);
+    });
+  }
+
   _UserProfileScreenState(this.user, this.userInformation);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              PageRouteBuilder(
-                  transitionDuration: Duration(seconds: 1),
-                  transitionsBuilder: (BuildContext context,
-                      Animation<double> animation,
-                      Animation<double> secAnimation,
-                      Widget child) {
-                    animation = CurvedAnimation(
-                        parent: animation, curve: Curves.easeInOutExpo);
-                    return ScaleTransition(
-                        scale: animation,
-                        child: child,
-                        alignment: Alignment.center);
-                  },
-                  pageBuilder: (BuildContext context,
-                      Animation<double> animation,
-                      Animation<double> secAnimation) {
-                    return PublicInvestmentsScreen(
-                        user: user, userInformation: userInformation);
-                  }));
-        },
-        backgroundColor: Color.fromRGBO(77, 208, 137, 1),
-        child: Icon(Icons.add, size: 35),
-      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(width: 1, color: Colors.black),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
           ),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 6, bottom: 6),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        Navigator.pop(
-                          context,
-                        );
-                      },
-                      icon: Icon(Icons.home, size: 33, color: Colors.grey)),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.person, size: 33, color: Colors.black))
-                ]),
-          )),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          )
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Color.fromRGBO(77, 208, 137, 1),
+        onTap: _onItemTapped,
+      ),
       backgroundColor: const Color.fromRGBO(77, 208, 137, 1),
       body: SizedBox(
         width: double.infinity,
