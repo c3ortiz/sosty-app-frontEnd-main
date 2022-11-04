@@ -21,6 +21,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 late UserInformation userInformation2;
 
@@ -189,12 +190,12 @@ class _MainScreenState extends State<MainScreen> {
                               SizedBox(height: 20),
                               Center(child: Text('Contactanos')),
                               SizedBox(height: 20),
-                              _buildRow(Icons.whatsapp, Colors.green,
+                              _buildRow(FontAwesomeIcons.whatsapp, Colors.green,
                                   'https://wa.me/+573204357649'),
-                              _buildRow(Icons.facebook, Colors.blue,
+                              _buildRow(FontAwesomeIcons.facebook, Colors.blue,
                                   'https://m.me/100584411364471'),
                               _buildRow(
-                                  Icons.message_rounded,
+                                  FontAwesomeIcons.instagram,
                                   Color.fromRGBO(225, 48, 108, 1),
                                   'https://www.instagram.com/sosty.co/')
                             ],
@@ -460,7 +461,7 @@ Widget _buildRow(IconData iconData, Color colors, String urlMedia) {
                   _launchUrl(url);
                 },
                 color: colors,
-                icon: Icon(iconData)),
+                icon: FaIcon(iconData)),
           ],
         ),
       ],
