@@ -99,87 +99,97 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
                         SingleChildScrollView(
                           child: Column(
                             children: [
-                              Container(
-                                  width: 350,
-                                  height: 195,
-                                  child: CachedNetworkImage(
-                                    placeholder: (context, url) {
-                                      return LoadingAnimationWidget.inkDrop(
-                                        color: Colors.white,
-                                        size: 50,
-                                      );
-                                    },
-                                    imageUrl: items.projectImageUrl1,
-                                    imageBuilder: (context, imageProvider) =>
-                                        Container(
-                                      width: 80.0,
-                                      height: 80.0,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(16),
-                                        image: DecorationImage(
-                                            image: imageProvider,
-                                            fit: BoxFit.fill),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                child: Container(
+                                    width: 350,
+                                    height: 195,
+                                    child: CachedNetworkImage(
+                                      placeholder: (context, url) {
+                                        return LoadingAnimationWidget.inkDrop(
+                                          color: Colors.white,
+                                          size: 50,
+                                        );
+                                      },
+                                      imageUrl: items.projectImageUrl1,
+                                      imageBuilder: (context, imageProvider) =>
+                                          Container(
+                                        width: 80.0,
+                                        height: 80.0,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.fill),
+                                        ),
                                       ),
-                                    ),
-                                  )),
+                                    )),
+                              ),
                               SizedBox(height: 10),
-                              Container(
-                                padding: EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
-                                width: 350,
-                                height: 350,
-                                child: DefaultTextStyle.merge(
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        items.projectName,
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: GoogleFonts.montserrat()
-                                                .fontFamily),
-                                      ),
-                                      SizedBox(height: 10),
-                                      listProfile(
-                                          Icons.monetization_on,
-                                          "Inversión mínima",
-                                          "\$ " +
-                                              NumberFormat('#,##0', "es_CO")
-                                                  .format(int.parse(items
-                                                      .investmentRequired
-                                                      .toString()))
-                                                  .toString(),
-                                          items.projectStatus.toString()),
-                                      listProfile(
-                                          Icons.grass,
-                                          "Unidades totales",
-                                          items.amountOfCattles.toString(),
-                                          items.projectStatus.toString()),
-                                      listProfile(
-                                          Icons.label_sharp,
-                                          "Estado",
-                                          items.projectStatus.toString(),
-                                          items.projectStatus.toString()),
-                                      listProfile(
-                                          Icons.keyboard_double_arrow_up,
-                                          "Rentabilidad estimada*",
-                                          "${items.projectProfitability} % (E.A)",
-                                          items.projectStatus.toString()),
-                                      listProfile(
-                                          Icons.watch,
-                                          "Duración",
-                                          "${items.projectDuration.toString()} meses",
-                                          items.projectStatus.toString()),
-                                      listProfile(
-                                          Icons.people,
-                                          "Ubicación",
-                                          items.locationAddress.toString(),
-                                          items.projectStatus.toString()),
-                                    ],
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                child: Container(
+                                  padding: EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                  width: 350,
+                                  height: 350,
+                                  child: DefaultTextStyle.merge(
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          items.projectName,
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily:
+                                                  GoogleFonts.montserrat()
+                                                      .fontFamily),
+                                        ),
+                                        SizedBox(height: 10),
+                                        listProfile(
+                                            Icons.monetization_on,
+                                            "Inversión mínima",
+                                            "\$ " +
+                                                NumberFormat('#,##0', "es_CO")
+                                                    .format(int.parse(items
+                                                        .investmentRequired
+                                                        .toString()))
+                                                    .toString(),
+                                            items.projectStatus.toString()),
+                                        listProfile(
+                                            Icons.grass,
+                                            "Unidades totales",
+                                            items.amountOfCattles.toString(),
+                                            items.projectStatus.toString()),
+                                        listProfile(
+                                            Icons.label_sharp,
+                                            "Estado",
+                                            items.projectStatus.toString(),
+                                            items.projectStatus.toString()),
+                                        listProfile(
+                                            Icons.keyboard_double_arrow_up,
+                                            "Rentabilidad estimada*",
+                                            "${items.projectProfitability} % (E.A)",
+                                            items.projectStatus.toString()),
+                                        listProfile(
+                                            Icons.watch,
+                                            "Duración",
+                                            "${items.projectDuration.toString()} meses",
+                                            items.projectStatus.toString()),
+                                        listProfile(
+                                            Icons.people,
+                                            "Ubicación",
+                                            items.locationAddress.toString(),
+                                            items.projectStatus.toString()),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),

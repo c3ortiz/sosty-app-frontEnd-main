@@ -194,7 +194,7 @@ class _MainScreenState extends State<MainScreen> {
                               _buildRow(Icons.facebook, Colors.blue,
                                   'https://m.me/100584411364471'),
                               _buildRow(
-                                  Icons.message_rounded,
+                                  Icons.photo,
                                   Color.fromRGBO(225, 48, 108, 1),
                                   'https://www.instagram.com/sosty.co/')
                             ],
@@ -313,7 +313,7 @@ class _MainScreenState extends State<MainScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "balance",
+                                  "Tú dinero disponible",
                                 ),
                               ]),
                         ],
@@ -356,7 +356,7 @@ class _MainScreenState extends State<MainScreen> {
                                       children: [
                                         TextSpan(
                                           text:
-                                              "Aún no tienes inversiones con nosotros, encuentra nuestras inversiones mas recientes ",
+                                              "Aún no tienes inversiones con nosotros, encuentra nuestros proyectos más recientes e invierte ",
                                           style: TextStyle(
                                               fontFamily:
                                                   GoogleFonts.montserrat()
