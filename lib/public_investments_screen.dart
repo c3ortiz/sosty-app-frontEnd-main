@@ -131,40 +131,56 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
                                         BorderRadius.all(Radius.circular(20))),
                                 width: 350,
                                 height: 350,
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      items.projectName,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: GoogleFonts.montserrat()
-                                              .fontFamily),
-                                    ),
-                                    SizedBox(height: 10),
-                                    listProfile(
-                                        Icons.monetization_on,
-                                        "Inversión mínima",
-                                        "\$ " +
-                                            NumberFormat('#,##0', "es_CO")
-                                                .format(int.parse(items
-                                                    .investmentRequired
-                                                    .toString()))
-                                                .toString()),
-                                    listProfile(Icons.grass, "Unidades totales",
-                                        items.amountOfCattles.toString()),
-                                    listProfile(Icons.label_sharp, "Estado",
-                                        items.projectStatus.toString()),
-                                    listProfile(
-                                        Icons.keyboard_double_arrow_up,
-                                        "Rentabilidad estimada*",
-                                        "${items.projectProfitability} % (E.A)"),
-                                    listProfile(Icons.watch, "Duración",
-                                        "${items.projectDuration.toString()} meses"),
-                                    listProfile(Icons.people, "Ubicación",
-                                        items.locationAddress.toString()),
-                                  ],
+                                child: DefaultTextStyle.merge(
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        items.projectName,
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: GoogleFonts.montserrat()
+                                                .fontFamily),
+                                      ),
+                                      SizedBox(height: 10),
+                                      listProfile(
+                                          Icons.monetization_on,
+                                          "Inversión mínima",
+                                          "\$ " +
+                                              NumberFormat('#,##0', "es_CO")
+                                                  .format(int.parse(items
+                                                      .investmentRequired
+                                                      .toString()))
+                                                  .toString(),
+                                          items.projectStatus.toString()),
+                                      listProfile(
+                                          Icons.grass,
+                                          "Unidades totales",
+                                          items.amountOfCattles.toString(),
+                                          items.projectStatus.toString()),
+                                      listProfile(
+                                          Icons.label_sharp,
+                                          "Estado",
+                                          items.projectStatus.toString(),
+                                          items.projectStatus.toString()),
+                                      listProfile(
+                                          Icons.keyboard_double_arrow_up,
+                                          "Rentabilidad estimada*",
+                                          "${items.projectProfitability} % (E.A)",
+                                          items.projectStatus.toString()),
+                                      listProfile(
+                                          Icons.watch,
+                                          "Duración",
+                                          "${items.projectDuration.toString()} meses",
+                                          items.projectStatus.toString()),
+                                      listProfile(
+                                          Icons.people,
+                                          "Ubicación",
+                                          items.locationAddress.toString(),
+                                          items.projectStatus.toString()),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -197,7 +213,14 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
   // }
 }
 
-Widget listProfile(IconData icon, String text1, String text2) {
+Widget listProfile(IconData icon, String text1, String text2, String state) {
+  Color colorText;
+  if (state.toLowerCase().trim() == "finalizado") {
+    colorText = Colors.grey;
+  } else {
+    colorText = Colors.black87;
+  }
+
   return Container(
     width: double.infinity,
     margin: const EdgeInsets.only(top: 10),
@@ -218,7 +241,7 @@ Widget listProfile(IconData icon, String text1, String text2) {
               Text(
                 text1,
                 style: TextStyle(
-                  color: Colors.black87,
+                  color: colorText,
                   fontFamily: GoogleFonts.montserrat().fontFamily,
                   fontSize: 14,
                 ),
@@ -226,7 +249,7 @@ Widget listProfile(IconData icon, String text1, String text2) {
               Text(
                 text2,
                 style: TextStyle(
-                    color: Colors.black87,
+                    color: colorText,
                     fontFamily: GoogleFonts.montserrat().fontFamily,
                     fontSize: 16,
                     fontWeight: FontWeight.bold),
