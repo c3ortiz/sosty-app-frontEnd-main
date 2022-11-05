@@ -1,10 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:my_first_app/foundation/sp_num_field/sp_num_field.dart';
 import 'package:my_first_app/investmentsUI.dart';
 import 'package:my_first_app/model/GetPublicTopProjects.dart';
 import 'package:my_first_app/model/user_information.dart';
+import 'package:my_first_app/public_investements_screenstate.dart';
 import 'package:my_first_app/user.dart';
 import 'package:my_first_app/user_profile_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -14,6 +17,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:intl/intl.dart';
 
+import 'foundation/sp_solid_button/sp_solid_button.dart';
+import 'foundation/sp_text_field/sp_text_field.dart';
 import 'model/GetInvestmentsInProgressByInvestorDTO.dart';
 
 class PublicInvestmentsScreen extends StatefulWidget {
@@ -37,7 +42,11 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
   List<GetPublicTopProjects>? topProjects = [];
   final User user;
 
+  String _estimacion = '';
+
   _PublicInvestmentsScreenState(this.user, this.userInformation);
+
+  TextEditingController _simulacionInversion = TextEditingController();
 
   @override
   void initState() {
@@ -84,13 +93,13 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
                   Text(' Nosotros', style: TextStyle(fontSize: 30)),
                 ])),
 
-            SizedBox(height: 70),
+            SizedBox(height: 20),
             //Investments
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Container(
-                height: 575,
+                height: 675,
                 child: PageView(
                     controller: _controller,
                     scrollDirection: Axis.horizontal,
@@ -138,7 +147,7 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(20))),
                                   width: 350,
-                                  height: 350,
+                                  height: 450,
                                   child: DefaultTextStyle.merge(
                                     child: Column(
                                       children: [
@@ -188,6 +197,24 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
                                             "Ubicación",
                                             items.locationAddress.toString(),
                                             items.projectStatus.toString()),
+                                        SizedBox(height: 20),
+                                        SPSolidButton(
+                                            text: "Simula tu inversión",
+                                            onPressed: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return PublicInvestmentsScreenState(
+                                                    rentabilidad: items
+                                                        .projectProfitability,
+                                                    inversionMinima: items
+                                                        .investmentRequired,
+                                                    duracionEstimada:
+                                                        items.projectDuration,
+                                                  );
+                                                },
+                                              );
+                                            })
                                       ],
                                     ),
                                   ),
@@ -215,12 +242,46 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
         )));
   }
 
+  int estimar(String valor) {
+    var finalEstimation;
+    if (valor.isEmpty) {
+      finalEstimation = 0;
+    } else {
+      finalEstimation = int.parse(valor) * 2;
+    }
+
+    return finalEstimation;
+  }
+
   // static Container makeContainersTopProjects() {
   //   Container container;
   //   for (var i = 0; i < topProjects; i++) {
 
   //   }
   // }
+}
+
+Widget _buildRow(IconData iconData, Color colors, String urlMedia) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+    child: Column(
+      children: <Widget>[
+        Container(height: 1, color: Color.fromARGB(255, 121, 121, 121)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            IconButton(
+                onPressed: () {
+                  Uri url = Uri.parse(urlMedia);
+                  // _launchUrl(url);
+                },
+                color: colors,
+                icon: FaIcon(iconData)),
+          ],
+        ),
+      ],
+    ),
+  );
 }
 
 Widget listProfile(IconData icon, String text1, String text2, String state) {
@@ -263,7 +324,7 @@ Widget listProfile(IconData icon, String text1, String text2, String state) {
                     fontFamily: GoogleFonts.montserrat().fontFamily,
                     fontSize: 16,
                     fontWeight: FontWeight.bold),
-              )
+              ),
             ],
           ),
         )
