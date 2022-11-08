@@ -271,15 +271,15 @@ class _ProjectTrackingScreen extends State<ProjectTrackingScreen>
       GetProjectProgressInformation investmentInfo) {
     List<ChartData> list = [
       ChartData(
-          "0 a 7 mensual",
+          "0kg a 7kg mensual",
           investmentInfo.weights!.last.cantidadDeAnimalesGanananDe0a7,
           Color.fromARGB(255, 34, 142, 37)),
       ChartData(
-          "7 a 10 mensual",
+          "7kg a 10kg mensual",
           investmentInfo.weights!.last.cantidadDeAnimalesGanananDe7a10,
           Color.fromARGB(255, 53, 173, 225)),
       ChartData(
-          "Mas de 10 mensual",
+          "Mas de 10kg mensual",
           investmentInfo.weights!.last.cantidadDeAnimalesGanananMasDe10,
           Color.fromARGB(255, 230, 143, 36))
     ];

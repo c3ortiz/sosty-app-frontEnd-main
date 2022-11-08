@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:my_first_app/new_investment_screen.dart';
 
 import 'foundation/sp_num_field/sp_num_field.dart';
 import 'foundation/sp_solid_button/sp_solid_button.dart';
@@ -39,7 +42,7 @@ class _PublicInvestmentsScreenStateState
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       elevation: 16,
       child: Container(
         padding: EdgeInsets.all(20),
@@ -81,15 +84,54 @@ class _PublicInvestmentsScreenStateState
             if (_estimacion.isNotEmpty)
               Container(
                 color: Color.fromARGB(122, 83, 241, 128),
-                child: Text(
-                  "Ganarás \$ " +
-                      NumberFormat('#,##0', "es_CO")
-                          .format(double.parse(_estimacion))
-                          .toString() +
-                      " COP en " +
-                      duracionEstimada.toString() +
-                      " meses aproximadamente",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                child: RichText(
+                  text: TextSpan(children: [
+                    TextSpan(
+                      text: "Ganarás \$ " +
+                          NumberFormat('#,##0', "es_CO")
+                              .format(double.parse(_estimacion))
+                              .toString() +
+                          " COP en " +
+                          duracionEstimada.toString() +
+                          " meses aproximadamente",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontFamily: GoogleFonts.montserrat().fontFamily),
+                    ),
+                    TextSpan(
+                        text: ' empieza aquí',
+                        style: TextStyle(
+                            fontFamily: GoogleFonts.montserrat().fontFamily,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 254, 167, 81)),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.push(
+                                context,
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      NewInvestmentScreen(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    const begin = Offset(0.0, 1.0);
+                                    const end = Offset.zero;
+                                    const curve = Curves.ease;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+
+                                    return SlideTransition(
+                                      position: animation.drive(tween),
+                                      child: child,
+                                    );
+                                  },
+                                ));
+                          }),
+                  ]),
                 ),
               )
           ]),

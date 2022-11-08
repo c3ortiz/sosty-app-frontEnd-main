@@ -81,164 +81,167 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
           child: Icon(Icons.close, size: 35),
         ),
         body: SafeArea(
-            child: Column(
-          children: [
-            SizedBox(height: 25),
-            Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25),
-                child: Row(children: [
-                  Text('Invierte con',
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-                  Text(' Nosotros', style: TextStyle(fontSize: 30)),
-                ])),
+            child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 25),
+              Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25),
+                  child: Row(children: [
+                    Text('Invierte con',
+                        style: TextStyle(
+                            fontSize: 30, fontWeight: FontWeight.bold)),
+                    Text(' Nosotros', style: TextStyle(fontSize: 30)),
+                  ])),
 
-            SizedBox(height: 20),
-            //Investments
+              SizedBox(height: 20),
+              //Investments
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: Container(
-                height: 675,
-                child: PageView(
-                    controller: _controller,
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      for (var items in topProjects!)
-                        SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 10, right: 10),
-                                child: Container(
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: Container(
+                  height: 675,
+                  child: PageView(
+                      controller: _controller,
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        for (var items in topProjects!)
+                          SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Container(
+                                      width: 350,
+                                      height: 195,
+                                      child: CachedNetworkImage(
+                                        placeholder: (context, url) {
+                                          return LoadingAnimationWidget.inkDrop(
+                                            color: Colors.white,
+                                            size: 50,
+                                          );
+                                        },
+                                        imageUrl: items.projectImageUrl1,
+                                        imageBuilder:
+                                            (context, imageProvider) =>
+                                                Container(
+                                          width: 80.0,
+                                          height: 80.0,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.fill),
+                                          ),
+                                        ),
+                                      )),
+                                ),
+                                SizedBox(height: 10),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Container(
+                                    padding: EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.black),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20))),
                                     width: 350,
-                                    height: 195,
-                                    child: CachedNetworkImage(
-                                      placeholder: (context, url) {
-                                        return LoadingAnimationWidget.inkDrop(
-                                          color: Colors.white,
-                                          size: 50,
-                                        );
-                                      },
-                                      imageUrl: items.projectImageUrl1,
-                                      imageBuilder: (context, imageProvider) =>
-                                          Container(
-                                        width: 80.0,
-                                        height: 80.0,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(16),
-                                          image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.fill),
-                                        ),
+                                    height: 450,
+                                    child: DefaultTextStyle.merge(
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            items.projectName,
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily:
+                                                    GoogleFonts.montserrat()
+                                                        .fontFamily),
+                                          ),
+                                          SizedBox(height: 10),
+                                          listProfile(
+                                              Icons.monetization_on,
+                                              "Inversión mínima",
+                                              "\$ " +
+                                                  NumberFormat('#,##0', "es_CO")
+                                                      .format(int.parse(items
+                                                          .investmentRequired
+                                                          .toString()))
+                                                      .toString(),
+                                              items.projectStatus.toString()),
+                                          listProfile(
+                                              Icons.grass,
+                                              "Unidades totales",
+                                              items.amountOfCattles.toString(),
+                                              items.projectStatus.toString()),
+                                          listProfile(
+                                              Icons.label_sharp,
+                                              "Estado",
+                                              items.projectStatus.toString(),
+                                              items.projectStatus.toString()),
+                                          listProfile(
+                                              Icons.keyboard_double_arrow_up,
+                                              "Rentabilidad estimada*",
+                                              "${items.projectProfitability} % (E.A)",
+                                              items.projectStatus.toString()),
+                                          listProfile(
+                                              Icons.watch,
+                                              "Duración",
+                                              "${items.projectDuration.toString()} meses",
+                                              items.projectStatus.toString()),
+                                          listProfile(
+                                              Icons.people,
+                                              "Ubicación",
+                                              items.locationAddress.toString(),
+                                              items.projectStatus.toString()),
+                                          SizedBox(height: 20),
+                                          SPSolidButton(
+                                              text: "Simula tu inversión",
+                                              onPressed: () {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return PublicInvestmentsScreenState(
+                                                      rentabilidad: items
+                                                          .projectProfitability,
+                                                      inversionMinima: items
+                                                          .investmentRequired,
+                                                      duracionEstimada:
+                                                          items.projectDuration,
+                                                    );
+                                                  },
+                                                );
+                                              })
+                                        ],
                                       ),
-                                    )),
-                              ),
-                              SizedBox(height: 10),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 10, right: 10),
-                                child: Container(
-                                  padding: EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.black),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(20))),
-                                  width: 350,
-                                  height: 450,
-                                  child: DefaultTextStyle.merge(
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          items.projectName,
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold,
-                                              fontFamily:
-                                                  GoogleFonts.montserrat()
-                                                      .fontFamily),
-                                        ),
-                                        SizedBox(height: 10),
-                                        listProfile(
-                                            Icons.monetization_on,
-                                            "Inversión mínima",
-                                            "\$ " +
-                                                NumberFormat('#,##0', "es_CO")
-                                                    .format(int.parse(items
-                                                        .investmentRequired
-                                                        .toString()))
-                                                    .toString(),
-                                            items.projectStatus.toString()),
-                                        listProfile(
-                                            Icons.grass,
-                                            "Unidades totales",
-                                            items.amountOfCattles.toString(),
-                                            items.projectStatus.toString()),
-                                        listProfile(
-                                            Icons.label_sharp,
-                                            "Estado",
-                                            items.projectStatus.toString(),
-                                            items.projectStatus.toString()),
-                                        listProfile(
-                                            Icons.keyboard_double_arrow_up,
-                                            "Rentabilidad estimada*",
-                                            "${items.projectProfitability} % (E.A)",
-                                            items.projectStatus.toString()),
-                                        listProfile(
-                                            Icons.watch,
-                                            "Duración",
-                                            "${items.projectDuration.toString()} meses",
-                                            items.projectStatus.toString()),
-                                        listProfile(
-                                            Icons.people,
-                                            "Ubicación",
-                                            items.locationAddress.toString(),
-                                            items.projectStatus.toString()),
-                                        SizedBox(height: 20),
-                                        SPSolidButton(
-                                            text: "Simula tu inversión",
-                                            onPressed: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return PublicInvestmentsScreenState(
-                                                    rentabilidad: items
-                                                        .projectProfitability,
-                                                    inversionMinima: items
-                                                        .investmentRequired,
-                                                    duracionEstimada:
-                                                        items.projectDuration,
-                                                  );
-                                                },
-                                              );
-                                            })
-                                      ],
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                    ]),
+                      ]),
+                ),
               ),
-            ),
 
-            SizedBox(height: 15),
+              SizedBox(height: 15),
 
-            if (topProjects!.isNotEmpty)
-              (SmoothPageIndicator(
-                  controller: _controller,
-                  count: topProjects!.length,
-                  effect: ExpandingDotsEffect(
-                      activeDotColor: Colors.grey.shade800))),
+              if (topProjects!.isNotEmpty)
+                (SmoothPageIndicator(
+                    controller: _controller,
+                    count: topProjects!.length,
+                    effect: ExpandingDotsEffect(
+                        activeDotColor: Colors.grey.shade800))),
 
-            //Balance
-            SizedBox(height: 30),
-          ],
+              //Balance
+              SizedBox(height: 30),
+            ],
+          ),
         )));
   }
 
