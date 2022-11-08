@@ -100,7 +100,7 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Container(
-                  height: 624,
+                  height: 644,
                   child: PageView(
                       controller: _controller,
                       scrollDirection: Axis.horizontal,
@@ -149,7 +149,7 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(20))),
                                     width: 350,
-                                    height: 400,
+                                    height: 420,
                                     child: DefaultTextStyle.merge(
                                       child: Column(
                                         children: [
@@ -237,11 +237,6 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
                         activeDotColor: Colors.grey.shade800))),
 
               SizedBox(height: 20),
-
-              Text('Inversión ya ha finalizado',
-                  style: TextStyle(
-                      fontSize: 21,
-                      fontFamily: GoogleFonts.montserrat().fontFamily)),
             ],
           ),
         )));

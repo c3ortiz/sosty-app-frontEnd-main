@@ -143,6 +143,7 @@ class _MainScreenState extends State<MainScreen> {
               left: 180,
               bottom: 40,
               child: FloatingActionButton(
+                tooltip: 'Invertir',
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -175,6 +176,7 @@ class _MainScreenState extends State<MainScreen> {
               bottom: 80,
               right: 20,
               child: FloatingActionButton(
+                tooltip: 'Contacto',
                 heroTag: 'soporte',
                 onPressed: () {
                   showDialog(
@@ -189,7 +191,7 @@ class _MainScreenState extends State<MainScreen> {
                             shrinkWrap: true,
                             children: <Widget>[
                               SizedBox(height: 20),
-                              Center(child: Text('Contactanos')),
+                              Center(child: Text('Contáctanos')),
                               SizedBox(height: 20),
                               _buildRow(FontAwesomeIcons.whatsapp, Colors.green,
                                   'https://wa.me/+573204357649'),
@@ -289,6 +291,11 @@ class _MainScreenState extends State<MainScreen> {
 
                     SizedBox(height: 15),
                     //Investments
+
+                    AnimatedOpacity(
+                        opacity: 1 == 0 ? 1.0 : 0.0,
+                        duration: const Duration(milliseconds: 500),
+                        child: Text('Oprime')),
 
                     Container(
                       height: 475,
