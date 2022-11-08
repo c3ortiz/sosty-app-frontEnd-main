@@ -135,6 +135,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         backgroundColor: Colors.white,
         floatingActionButton: Stack(
           children: [
@@ -211,7 +212,6 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ],
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(

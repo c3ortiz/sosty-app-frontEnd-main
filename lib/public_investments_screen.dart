@@ -100,7 +100,7 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Container(
-                  height: 675,
+                  height: 624,
                   child: PageView(
                       controller: _controller,
                       scrollDirection: Axis.horizontal,
@@ -149,7 +149,7 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(20))),
                                     width: 350,
-                                    height: 450,
+                                    height: 400,
                                     child: DefaultTextStyle.merge(
                                       child: Column(
                                         children: [
@@ -163,7 +163,7 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
                                                     GoogleFonts.montserrat()
                                                         .fontFamily),
                                           ),
-                                          SizedBox(height: 10),
+                                          SizedBox(height: 5),
                                           listProfile(
                                               Icons.monetization_on,
                                               "Inversión mínima",
@@ -176,7 +176,7 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
                                               items.projectStatus.toString()),
                                           listProfile(
                                               Icons.grass,
-                                              "Unidades totales",
+                                              "Cabezas de ganado totales",
                                               items.amountOfCattles.toString(),
                                               items.projectStatus.toString()),
                                           listProfile(
@@ -229,8 +229,6 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
                 ),
               ),
 
-              SizedBox(height: 15),
-
               if (topProjects!.isNotEmpty)
                 (SmoothPageIndicator(
                     controller: _controller,
@@ -238,8 +236,12 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
                     effect: ExpandingDotsEffect(
                         activeDotColor: Colors.grey.shade800))),
 
-              //Balance
-              SizedBox(height: 30),
+              SizedBox(height: 20),
+
+              Text('Inversión ya ha finalizado',
+                  style: TextStyle(
+                      fontSize: 21,
+                      fontFamily: GoogleFonts.montserrat().fontFamily)),
             ],
           ),
         )));

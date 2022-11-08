@@ -71,6 +71,7 @@ class _PublicInvestmentsScreenStateState
                 return null;
               },
             ),
+            SizedBox(height: 20),
             SPSolidButton(
               text: "calcular",
               onPressed: () {
