@@ -10,20 +10,24 @@ import 'foundation/sp_num_field/sp_num_field.dart';
 import 'foundation/sp_solid_button/sp_solid_button.dart';
 import 'package:intl/intl.dart';
 
+import 'model/GetPublicTopProjects.dart';
+
 class PublicInvestmentsScreenState extends StatefulWidget {
   const PublicInvestmentsScreenState(
       {super.key,
       required this.rentabilidad,
       this.inversionMinima,
-      this.duracionEstimada});
+      this.duracionEstimada,
+      required this.publicProjectInfo});
+  final GetPublicTopProjects publicProjectInfo;
   final dynamic rentabilidad;
   final dynamic inversionMinima;
   final dynamic duracionEstimada;
 
   @override
   State<PublicInvestmentsScreenState> createState() =>
-      _PublicInvestmentsScreenStateState(
-          this.rentabilidad, this.inversionMinima, this.duracionEstimada);
+      _PublicInvestmentsScreenStateState(this.rentabilidad,
+          this.inversionMinima, this.duracionEstimada, this.publicProjectInfo);
 }
 
 class _PublicInvestmentsScreenStateState
@@ -34,9 +38,10 @@ class _PublicInvestmentsScreenStateState
   final dynamic rentabilidad;
   final dynamic inversionMinima;
   final dynamic duracionEstimada;
+  final GetPublicTopProjects publicProjectInfo;
 
-  _PublicInvestmentsScreenStateState(
-      this.rentabilidad, this.inversionMinima, this.duracionEstimada);
+  _PublicInvestmentsScreenStateState(this.rentabilidad, this.inversionMinima,
+      this.duracionEstimada, this.publicProjectInfo);
 
   final formKey = GlobalKey<FormState>();
   @override
@@ -115,7 +120,11 @@ class _PublicInvestmentsScreenStateState
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      NewInvestmentScreen(),
+                                      NewInvestmentScreen(publicProjectInfo,
+                                          inversion: double.parse(
+                                              _simulacionInversion.text
+                                                  .replaceAll(',', '')
+                                                  .replaceAll('\$', ''))),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     const begin = Offset(0.0, 1.0);

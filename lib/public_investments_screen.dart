@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,6 +21,7 @@ import 'package:intl/intl.dart';
 import 'foundation/sp_solid_button/sp_solid_button.dart';
 import 'foundation/sp_text_field/sp_text_field.dart';
 import 'model/GetInvestmentsInProgressByInvestorDTO.dart';
+import 'new_investment_screen.dart';
 
 class PublicInvestmentsScreen extends StatefulWidget {
   final User user;
@@ -100,7 +102,7 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Container(
-                  height: 644,
+                  height: 680,
                   child: PageView(
                       controller: _controller,
                       scrollDirection: Axis.horizontal,
@@ -149,75 +151,141 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(20))),
                                     width: 350,
-                                    height: 420,
+                                    height: 470,
                                     child: DefaultTextStyle.merge(
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            items.projectName,
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily:
-                                                    GoogleFonts.montserrat()
-                                                        .fontFamily),
-                                          ),
-                                          SizedBox(height: 5),
-                                          listProfile(
-                                              Icons.monetization_on,
-                                              "Inversión mínima",
-                                              "\$ " +
-                                                  NumberFormat('#,##0', "es_CO")
-                                                      .format(int.parse(items
-                                                          .investmentRequired
-                                                          .toString()))
-                                                      .toString(),
-                                              items.projectStatus.toString()),
-                                          listProfile(
-                                              Icons.grass,
-                                              "Cabezas de ganado totales",
-                                              items.amountOfCattles.toString(),
-                                              items.projectStatus.toString()),
-                                          listProfile(
-                                              Icons.label_sharp,
-                                              "Estado",
-                                              items.projectStatus.toString(),
-                                              items.projectStatus.toString()),
-                                          listProfile(
-                                              Icons.keyboard_double_arrow_up,
-                                              "Rentabilidad estimada*",
-                                              "${items.projectProfitability} % (E.A)",
-                                              items.projectStatus.toString()),
-                                          listProfile(
-                                              Icons.watch,
-                                              "Duración",
-                                              "${items.projectDuration.toString()} meses",
-                                              items.projectStatus.toString()),
-                                          listProfile(
-                                              Icons.people,
-                                              "Ubicación",
-                                              items.locationAddress.toString(),
-                                              items.projectStatus.toString()),
-                                          SizedBox(height: 20),
-                                          SPSolidButton(
-                                              text: "Simula tu inversión",
-                                              onPressed: () {
-                                                showDialog(
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return PublicInvestmentsScreenState(
-                                                      rentabilidad: items
-                                                          .projectProfitability,
-                                                      inversionMinima: items
-                                                          .investmentRequired,
-                                                      duracionEstimada:
-                                                          items.projectDuration,
-                                                    );
-                                                  },
-                                                );
-                                              })
-                                        ],
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              items.projectName,
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontFamily:
+                                                      GoogleFonts.montserrat()
+                                                          .fontFamily),
+                                            ),
+                                            SizedBox(height: 5),
+                                            listProfile(
+                                                Icons.monetization_on,
+                                                "Inversión mínima",
+                                                "\$ " +
+                                                    NumberFormat(
+                                                            '#,##0', "es_CO")
+                                                        .format(int.parse(items
+                                                            .investmentRequired
+                                                            .toString()))
+                                                        .toString(),
+                                                items.projectStatus.toString()),
+                                            listProfile(
+                                                Icons.grass,
+                                                "Cabezas de ganado totales",
+                                                items.amountOfCattles
+                                                    .toString(),
+                                                items.projectStatus.toString()),
+                                            listProfile(
+                                                Icons.label_sharp,
+                                                "Estado",
+                                                items.projectStatus.toString(),
+                                                items.projectStatus.toString()),
+                                            listProfile(
+                                                Icons.keyboard_double_arrow_up,
+                                                "Rentabilidad estimada*",
+                                                "${items.projectProfitability} % (E.A)",
+                                                items.projectStatus.toString()),
+                                            listProfile(
+                                                Icons.watch,
+                                                "Duración",
+                                                "${items.projectDuration.toString()} meses",
+                                                items.projectStatus.toString()),
+                                            listProfile(
+                                                Icons.people,
+                                                "Ubicación",
+                                                items.locationAddress
+                                                    .toString(),
+                                                items.projectStatus.toString()),
+                                            SizedBox(height: 30),
+                                            SPSolidButton(
+                                              text: "Invierte ahora",
+                                              onPressed: (() {
+                                                Navigator.push(
+                                                    context,
+                                                    PageRouteBuilder(
+                                                      pageBuilder: (context,
+                                                              animation,
+                                                              secondaryAnimation) =>
+                                                          NewInvestmentScreen(
+                                                        items,
+                                                        inversion: double.parse(
+                                                            items
+                                                                .investmentRequired
+                                                                .toString()),
+                                                      ),
+                                                      transitionsBuilder:
+                                                          (context,
+                                                              animation,
+                                                              secondaryAnimation,
+                                                              child) {
+                                                        const begin =
+                                                            Offset(0.0, 1.0);
+                                                        const end = Offset.zero;
+                                                        const curve =
+                                                            Curves.ease;
+
+                                                        var tween = Tween(
+                                                                begin: begin,
+                                                                end: end)
+                                                            .chain(CurveTween(
+                                                                curve: curve));
+
+                                                        return SlideTransition(
+                                                          position: animation
+                                                              .drive(tween),
+                                                          child: child,
+                                                        );
+                                                      },
+                                                    ));
+                                              }),
+                                            ),
+                                            RichText(
+                                                text: TextSpan(
+                                                    text: 'Simula tu inversión',
+                                                    style: TextStyle(
+                                                        fontFamily: GoogleFonts
+                                                                .montserrat()
+                                                            .fontFamily,
+                                                        fontSize: 15,
+                                                        decoration:
+                                                            TextDecoration
+                                                                .underline,
+                                                        color: Color.fromARGB(
+                                                            255, 0, 0, 0)),
+                                                    recognizer:
+                                                        TapGestureRecognizer()
+                                                          ..onTap = () {
+                                                            showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return PublicInvestmentsScreenState(
+                                                                  rentabilidad:
+                                                                      items
+                                                                          .projectProfitability,
+                                                                  inversionMinima:
+                                                                      items
+                                                                          .investmentRequired,
+                                                                  duracionEstimada:
+                                                                      items
+                                                                          .projectDuration,
+                                                                  publicProjectInfo:
+                                                                      items,
+                                                                );
+                                                              },
+                                                            );
+                                                          })),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
