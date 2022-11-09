@@ -159,9 +159,8 @@ class _PublicInvestmentsScreenStateState
       finalEstimation = 0.0;
     } else {
       finalEstimation = (int.parse(valor) *
-              ((double.parse(rentabilidad) / 1200) *
-                  double.parse(duracionEstimada))) +
-          int.parse(valor);
+          ((double.parse(rentabilidad) / 1200) *
+              double.parse(duracionEstimada)));
     }
 
     return finalEstimation;

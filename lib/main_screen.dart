@@ -292,11 +292,6 @@ class _MainScreenState extends State<MainScreen> {
                     SizedBox(height: 15),
                     //Investments
 
-                    AnimatedOpacity(
-                        opacity: 1 == 0 ? 1.0 : 0.0,
-                        duration: const Duration(milliseconds: 500),
-                        child: Text('Oprime')),
-
                     Container(
                       height: 475,
                       child: PageView(
