@@ -24,11 +24,20 @@ class _NewInvestmentScreenState extends State<NewInvestmentScreen> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Text('hola inicia tu nueva inversion en ' +
-              publicProjectInfo.projectName +
-              ' con una inversion minima de ' +
-              inversion.toString()),
-        ),
+            child: Column(
+          children: [
+            SizedBox(height: 25),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25),
+                child: Row(children: [
+                  Text('Inicia tu',
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                  Text(' inversión', style: TextStyle(fontSize: 30)),
+                ])),
+            SizedBox(height: 20),
+          ],
+        )),
       ),
     );
   }

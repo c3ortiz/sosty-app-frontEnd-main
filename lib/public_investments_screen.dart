@@ -93,7 +93,7 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
                     Text('Invierte con',
                         style: TextStyle(
                             fontSize: 30, fontWeight: FontWeight.bold)),
-                    Text(' Nosotros', style: TextStyle(fontSize: 30)),
+                    Text(' nosotros', style: TextStyle(fontSize: 30)),
                   ])),
 
               SizedBox(height: 20),
@@ -201,11 +201,17 @@ class _PublicInvestmentsScreenState extends State<PublicInvestmentsScreen> {
                                                 items.projectStatus.toString()),
                                             listProfile(
                                                 Icons.people,
+                                                "Neoganaderos",
+                                                items.amountOfInvestors
+                                                    .toString(),
+                                                items.projectStatus.toString()),
+                                            listProfile(
+                                                Icons.location_pin,
                                                 "Ubicación",
                                                 items.locationAddress
                                                     .toString(),
                                                 items.projectStatus.toString()),
-                                            SizedBox(height: 30),
+                                            SizedBox(height: 15),
                                             SPSolidButton(
                                               text: "Invierte ahora",
                                               onPressed: (() {

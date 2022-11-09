@@ -109,7 +109,10 @@ class investmentsUI extends StatelessWidget {
                     "${project.projectProfitability.toString()} % (E.A)"),
                 listProfile(Icons.watch, "Duración", "${duration} dias"),
                 listProfile(
-                    Icons.people, "Neoganaderos", "${project.projectStatus}"),
+                    Icons.calendar_month,
+                    "Fecha finalización",
+                    DateFormat('dd-MM-yyyy')
+                        .format(DateTime.parse(project.endDate.toString()))),
               ],
             ),
           ),
